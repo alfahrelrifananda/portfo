@@ -10,13 +10,13 @@ require_once 'config.php';
 </head>
 <body>
     <nav>
-        <a href="index.php">[Home]</a>
-        <a href="about.php">[About]</a>
-        <a href="projects.php">[Projects]</a>
-        <a href="blog.php">[Blog]</a>
-        <a href="contact.php">[Contact]</a>
+        <a href="index.php">Home</a>
+        <a href="about.php">About</a>
+        <a href="projects.php">Projects</a>
+        <a href="blog.php">Blog</a>
+        <a href="contact.php">Contact</a>
         <?php if (isLoggedIn()): ?>
-            <a href="dashboard.php">[Dashboard]</a>
+            <a href="dashboard.php">Dashboard</a>
         <?php endif; ?>
     </nav>
     
@@ -28,6 +28,6 @@ require_once 'config.php';
     <p>GitHub: github.com/alfahrelrifananda</p>
     <hr>
     
-    <p><a href="projects.php">[View All Projects]</a> | <a href="contact.php">[Get In Touch]</a></p>
+    <p><a href="projects.php">View All Projects</a> | <a href="contact.php">Get In Touch</a></p>
 </body>
 </html>

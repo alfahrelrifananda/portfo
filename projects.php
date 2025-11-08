@@ -8,13 +8,13 @@
 </head>
 <body>
     <nav>
-        <a href="index.php">[Home]</a>
-        <a href="about.php">[About]</a>
-        <a href="projects.php">[Projects]</a>
-        <a href="blog.php">[Blog]</a>
-        <a href="contact.php">[Contact]</a>
+        <a href="index.php">Home</a>
+        <a href="about.php">About</a>
+        <a href="projects.php">Projects</a>
+        <a href="blog.php">Blog</a>
+        <a href="contact.php">Contact</a>
         <?php if (isLoggedIn()): ?>
-            <a href="dashboard.php">[Dashboard]</a>
+            <a href="dashboard.php">Dashboard</a>
         <?php endif; ?>
     </nav>
     
@@ -35,7 +35,7 @@
         <?php endif; ?>
         <p><?php echo nl2br(htmlspecialchars($project['description'])); ?></p>
         <?php if ($project['url']): ?>
-            <p><a href="<?php echo htmlspecialchars($project['url']); ?>" target="_blank">[View Project]</a></p>
+            <p><a href="<?php echo htmlspecialchars($project['url']); ?>" target="_blank">View Project</a></p>
         <?php endif; ?>
         <p><small>Added on <?php echo date('F j, Y', strtotime($project['created_at'])); ?></small></p>
         <hr>

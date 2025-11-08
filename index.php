@@ -8,13 +8,13 @@
 </head>
 <body>
     <nav>
-        <a href="index.php">[Home]</a>
-        <a href="about.php">[About]</a>
-        <a href="projects.php">[Projects]</a>
-        <a href="blog.php">[Blog]</a>
-        <a href="contact.php">[Contact]</a>
+        <a href="index.php">Home</a>
+        <a href="about.php">About</a>
+        <a href="projects.php">Projects</a>
+        <a href="blog.php">Blog</a>
+        <a href="contact.php">Contact</a>
         <?php if (isLoggedIn()): ?>
-            <a href="dashboard.php">[Dashboard]</a>
+            <a href="dashboard.php">Dashboard</a>
         <?php endif; ?>
     </nav>
     
@@ -25,6 +25,6 @@
     <p>Hello! my name is Fahrel, and I'm a web developer from Indonesia.</p>
     
     <hr>
-    <p><a href="projects.php">[View All Projects]</a> | <a href="contact.php">[Get In Touch]</a></p>
+    <p><a href="projects.php">View All Projects</a> | <a href="contact.php">Get In Touch</a></p>
 </body>
 </html>

@@ -9,20 +9,20 @@
 </head>
 <body>
     <nav>
-        <a href="index.php">[Home]</a>
-        <a href="about.php">[About]</a>
-        <a href="projects.php">[Projects]</a>
-        <a href="blog.php">[Blog]</a>
-        <a href="contact.php">[Contact]</a>
+        <a href="index.php">Home</a>
+        <a href="about.php">About</a>
+        <a href="projects.php">Projects</a>
+        <a href="blog.php">Blog</a>
+        <a href="contact.php">Contact</a>
         <?php if (isLoggedIn()): ?>
-            <a href="dashboard.php">[Dashboard]</a>
+            <a href="dashboard.php">Dashboard</a>
         <?php endif; ?>
     </nav>
     
     <hr>
     
     <h1>Blog</h1>
-    <p><a href="rss.php">[Subscribe via RSS]</a></p>
+    <p><a href="rss.php">Subscribe via RSS</a></p>
     
     <hr>
     
@@ -44,7 +44,7 @@
         <?php endif; ?>
         <div><?php echo nl2br(htmlspecialchars($post['content'])); ?></div>
         <hr>
-        <p><a href="blog.php">[Back to Blog]</a></p>
+        <p><a href="blog.php">Back to Blog</a></p>
     <?php
         else:
             echo "<p>Post not found.</p>";
@@ -61,7 +61,7 @@
             <p><img src="<?php echo htmlspecialchars($post['image']); ?>" alt="<?php echo htmlspecialchars($post['title']); ?>" width="400"></p>
         <?php endif; ?>
         <p><?php echo nl2br(htmlspecialchars(substr($post['content'], 0, 200))); ?>...</p>
-        <p><a href="blog.php?id=<?php echo $post['id']; ?>">[Read more]</a></p>
+        <p><a href="blog.php?id=<?php echo $post['id']; ?>">Read more</a></p>
         <hr>
     <?php
             endwhile;

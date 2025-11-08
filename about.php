@@ -8,13 +8,13 @@
 </head>
 <body>
     <nav>
-        <a href="index.php">[Home]</a>
-        <a href="about.php">[About]</a>
-        <a href="projects.php">[Projects]</a>
-        <a href="blog.php">[Blog]</a>
-        <a href="contact.php">[Contact]</a>
+        <a href="index.php">Home</a>
+        <a href="about.php">About</a>
+        <a href="projects.php">Projects</a>
+        <a href="blog.php">Blog</a>
+        <a href="contact.php">Contact</a>
         <?php if (isLoggedIn()): ?>
-            <a href="dashboard.php">[Dashboard]</a>
+            <a href="dashboard.php">Dashboard</a>
         <?php endif; ?>
     </nav>
     
@@ -38,6 +38,6 @@
     <p>My Experience is in web development for several years, creating various projects ranging from personal websites to complex web applications.</p>
     
     <hr>
-    <p><a href="projects.php">[View My Work]</a> | <a href="contact.php">[Contact Me]</a></p>
+    <p><a href="projects.php">View My Work</a> | <a href="contact.php">Contact Me</a></p>
 </body>
 </html>
