@@ -27,5 +27,7 @@ require_once 'config.php';
     <p>Email: pahrel1234@gmail.com</p>
     <p>GitHub: github.com/alfahrelrifananda</p>
     <hr>
+    
+    <p><a href="projects.php">[View All Projects]</a> | <a href="contact.php">[Get In Touch]</a></p>
 </body>
 </html>
