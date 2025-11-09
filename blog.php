@@ -59,7 +59,6 @@
         <p><small>By <?php echo htmlspecialchars($post['author']); ?> on <?php echo date('F j, Y', strtotime($post['created_at'])); ?></small></p>
         <p><?php echo nl2br(htmlspecialchars(substr($post['content'], 0, 200))); ?>...</p>
         <p><a href="blog.php?id=<?php echo $post['id']; ?>">Read more</a></p>
-        <hr>
     <?php
             endwhile;
         else:
