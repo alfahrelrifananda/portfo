@@ -37,7 +37,10 @@
     <h2>Experience</h2>
     <p>Ive got some Experience in Web Development, as a WordPress Developer back in 2024 when I was doing my intern.</p>
     
-    <hr>
-    <p><a href="projects.php">View My Work</a> | <a href="contact.php">Contact Me</a></p>
+     <footer> 
+        <hr>
+        <p><a href="projects.php">View All Projects</a> | <a href="contact.php">Get In Touch</a></p>    
+        © 2022 AlfahrelRifananda
+    </footer>
 </body>
 </html>

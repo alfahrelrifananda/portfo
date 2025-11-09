@@ -22,14 +22,16 @@
     
     <h1>Welcome to My Site</h1>
     
-    <p>Hello! my name is Fahrel, and I'm a web developer and free software enthusiast from Indonesia.</p>
-
-<p>
-
-This site is runnning through cloudflare tunnel sadly :(
-</p>
+    <p>Hello! my name is Fahrel, and I'm a web developer GNU/LINUX Advocate.</p>
+    <p>
+    Sadly, This site is runnning through cloudflare tunnel, because I'm using a VPS, and I don't have a static IP.
+    </p>
     
-    <hr>
-    <p><a href="projects.php">View All Projects</a> | <a href="contact.php">Get In Touch</a></p>
+   
+    <footer> 
+        <hr>
+        <p><a href="projects.php">View All Projects</a> | <a href="contact.php">Get In Touch</a></p>    
+        © 2022 AlfahrelRifananda
+    </footer>
 </body>
 </html>

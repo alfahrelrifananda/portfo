@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - My Portfolio</title>
+    <title>Contact - AlfahrelRifananda</title>
 </head>
 <body>
     <nav>
@@ -75,5 +75,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <p><label>Message *</label><br><textarea name="message" rows="6" required></textarea></p>
         <p><button type="submit">Send Message</button></p>
     </form>
+    
+     <footer> 
+        <hr>
+        <p><a href="projects.php">View All Projects</a> | <a href="contact.php">Get In Touch</a></p>    
+        © 2022 AlfahrelRifananda
+    </footer>
 </body>
 </html>

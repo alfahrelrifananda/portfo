@@ -45,5 +45,11 @@
     ?>
         <p>No projects available yet. Check back soon!</p>
     <?php endif; $conn->close(); ?>
+    
+     <footer> 
+        <hr>
+        <p><a href="projects.php">View All Projects</a> | <a href="contact.php">Get In Touch</a></p>    
+        © 2022 AlfahrelRifananda
+    </footer>
 </body>
 </html>
