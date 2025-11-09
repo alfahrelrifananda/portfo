@@ -6,8 +6,8 @@ header('Content-Type: application/rss+xml; charset=utf-8');
 $conn = getConnection();
 $posts = $conn->query("SELECT * FROM posts ORDER BY created_at DESC LIMIT 20");
 
-$blogTitle = "AlfahrelRifananda's blog";
-$blogDescription = "Latest posts from fahrel's personal blog";
+$blogTitle = "AlfahrelRifananda's Blog";
+$blogDescription = "Latest news from AlfahrelRifananda's blog posts";
 $blogLink = "https://alfahrelrifananda.my.id/blog.php";
 
 echo '<?xml version="1.0" encoding="UTF-8"?>';
