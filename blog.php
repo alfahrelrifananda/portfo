@@ -22,7 +22,7 @@
     <hr>
     
     <h1>Blog</h1>
-    <p><a href="rss.php">Subscribe via RSS</a></p>
+    <p><a href="rss.php">RSS Feed</a></p>
     
     <hr>
     
