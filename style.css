@@ -4,3 +4,11 @@ header {
     align-items: center;
     flex-wrap: wrap;
 }
+
+
+@media screen and (max-width: 1000px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
