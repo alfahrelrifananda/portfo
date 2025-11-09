@@ -3,9 +3,6 @@ require_once 'config.php';
 $title = 'Blog - AlfahrelRifananda';
 include 'header.php';
 ?>
-
-
-    
     <?php
     $conn = getConnection();
     
@@ -35,8 +32,6 @@ include 'header.php';
         if ($posts && $posts->num_rows > 0):
             while ($post = $posts->fetch_assoc()):
     ?>
-    <h1>Blog</h1>
-    <p><a href="rss.php">RSS Feed</a></p>
     <hr>
         <h2><a href="blog.php?id=<?php echo $post['id']; ?>"><?php echo htmlspecialchars($post['title']); ?></a></h2>
         <p><small>By <?php echo htmlspecialchars($post['author']); ?> on <?php echo date('F j, Y', strtotime($post['created_at'])); ?></small></p>
