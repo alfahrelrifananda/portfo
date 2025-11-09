@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $subject = htmlspecialchars($_POST['subject']);
     $msg = htmlspecialchars($_POST['message']);
 
-    $to = "your@gmail.com"; // change this to your actual address
+    $to = "pahrel1234@gmail.com"; // change this to your actual address
     $full_subject = "Portfolio Contact: " . $subject;
     $body = "You have a new message from your portfolio site:\n\n" .
             "Name: $name\n" .
