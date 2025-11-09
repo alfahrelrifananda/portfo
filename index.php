@@ -1,4 +1,5 @@
 <?php
+include 'config.php';
 $title = 'Home - AlfahrelRifananda';
 include 'header.php';
 ?>
@@ -9,7 +10,6 @@ include 'header.php';
 
 <hr>
 
-<h1>Blog</h1>
     <p><a href="rss.php">RSS Feed</a></p>
     
     <?php
