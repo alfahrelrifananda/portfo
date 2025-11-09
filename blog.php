@@ -15,6 +15,7 @@ include 'header.php';
         
         if ($post):
     ?>
+    <div class="blog-container">
         <h2><?php echo htmlspecialchars($post['title']); ?></h2>
         <p><small>By <?php echo htmlspecialchars($post['author']); ?> on <?php echo date('F j, Y', strtotime($post['created_at'])); ?></small></p>
         <hr>
@@ -24,6 +25,8 @@ include 'header.php';
         <div><?php echo nl2br(htmlspecialchars($post['content'])); ?></div>
         <hr>
         <p><a href="blog.php">Back to Blog</a></p>
+    </div>
+       
     <?php
         else:
             echo "<p>Post not found.</p>";
