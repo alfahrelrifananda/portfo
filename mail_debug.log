@@ -1,0 +1,37 @@
+[2025-11-09 03:44:56] mail() returned: false
+[2025-11-09 03:45:55] mail() returned: false
+[2025-11-09 03:47:20] mail() called
+sendmail_path: /usr/sbin/sendmail -t -i
+To: your@gmail.com
+From: dasdas@gmail.com
+Subject: Portfolio Contact: dadsa
+mail() returned: false
+
+[2025-11-09 03:48:09] mail() called
+sendmail_path: /usr/sbin/sendmail -t -i
+To: pahrel1234@gmail.com
+From: dadas@gmail.com
+Subject: Portfolio Contact: dasdsa
+mail() returned: false
+
+[2025-11-09 03:52:19] mail() called
+sendmail_path: /usr/sbin/sendmail -t -i
+To: pahrel1234@gmail.com
+From: test@gmail.com
+Subject: Portfolio Contact: This is a test
+mail() returned: false
+
+[2025-11-09 03:55:03] mail() called
+sendmail_path: /data/data/com.termux/files/usr/bin/sendmail -t -i
+To: pahrel1234@gmail.com
+From: test@gmail.com
+Subject: Portfolio Contact: This is a test
+mail() returned: false
+
+[2025-11-09 03:56:37] mail() called
+sendmail_path: /data/data/com.termux/files/usr/bin/sendmail -t -i
+To: pahrel1234@gmail.com
+From: test@gmail.com
+Subject: Portfolio Contact: This is a test
+mail() returned: true
+
