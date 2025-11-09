@@ -19,10 +19,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                "Reply-To: $email\r\n" .
                "Content-Type: text/plain; charset=UTF-8\r\n";
 
-    if (mail($to, $full_subject, $body, $headers)) {
-        $message = "Thank you for your message!";
+    $log_file = __DIR__ . '/mail_debug.log';
+    $timestamp = date('Y-m-d H:i:s');
+    $log_message = "[$timestamp] mail() returned: " . ($result ? 'true' : 'false') . "\n";
+    file_put_contents($log_file, $log_message, FILE_APPEND);
+
+    if ($result) {
+        $message = "Thank you! Your message was sent successfully.";
     } else {
-        $message = "Sorry, something went wrong — the email could not be sent.";
+        $message = "Sorry, something went wrong — the email could not be sent.<br>
+        Please check <code>mail_debug.log</code> or <code>~/.msmtp.log</code> for details.";
     }
 }
 ?>
