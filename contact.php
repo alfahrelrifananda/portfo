@@ -1,4 +1,5 @@
 <?php
+ini_set('sendmail_path', '/data/data/com.termux/files/usr/bin/sendmail -t -i');
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 require_once 'config.php';
