@@ -6,6 +6,7 @@ include 'header.php';
 
 <h1>Blog</h1>
     <p><a href="rss.php">RSS Feed</a></p>
+    <hr>
     
     <?php
     $conn = getConnection();

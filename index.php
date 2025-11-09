@@ -10,7 +10,7 @@ include 'header.php';
 
 <hr>
 
-    <h3>Latest Blog Posts</h3>
+    <h2>Latest Blog Posts</h2>
     <p><a href="rss.php">RSS Feed</a></p>
     
     <?php
@@ -58,6 +58,7 @@ include 'header.php';
     }
     $conn->close();
     ?>
-    <p href="blog.php">View more posts</p>
+    <hr>
+    <a href="blog.php">View more posts</a>
 
 <?php include 'footer.php'; ?>
