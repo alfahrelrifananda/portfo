@@ -8,7 +8,7 @@ $posts = $conn->query("SELECT * FROM posts ORDER BY created_at DESC LIMIT 20");
 
 $blogTitle = "My Personal Blog";
 $blogDescription = "Latest posts from my personal blog";
-$blogLink = "http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . "/blog.php";
+$blogLink = "https://alfahrelrifananda.my.id/blog.php";
 
 echo '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
