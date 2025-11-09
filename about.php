@@ -35,7 +35,7 @@
     </ul>
     
     <h2>Experience</h2>
-    <p>My Experience is in web development for several years, creating various projects ranging from personal websites to complex web applications.</p>
+    <p>Ive got some Experience in Web Development, as a WordPress Developer back in 2024 when I was doing my intern.</p>
     
     <hr>
     <p><a href="projects.php">View My Work</a> | <a href="contact.php">Contact Me</a></p>
