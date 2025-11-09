@@ -10,13 +10,13 @@ require_once 'config.php';
 </head>
 <body>
     <nav>
-        <a href="index.php">Home</a>
-        <a href="about.php">About</a>
-        <a href="projects.php">Projects</a>
-        <a href="blog.php">Blog</a>
+        <a href="index.php">Home</a> | 
+        <a href="about.php">About</a> | 
+        <a href="projects.php">Projects</a> | 
+        <a href="blog.php">Blog</a> | 
         <a href="contact.php">Contact</a>
         <?php if (function_exists('isLoggedIn') && isLoggedIn()): ?>
-            <a href="dashboard.php">Dashboard</a>
+            | <a href="dashboard.php">Dashboard</a>
         <?php endif; ?>
     </nav>
     <hr>
