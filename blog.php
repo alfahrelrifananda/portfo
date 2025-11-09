@@ -15,17 +15,17 @@ include 'header.php';
         
         if ($post):
     ?>
-    <div class="blog-container">
         <h2><?php echo htmlspecialchars($post['title']); ?></h2>
         <p><small>By <?php echo htmlspecialchars($post['author']); ?> on <?php echo date('F j, Y', strtotime($post['created_at'])); ?></small></p>
         <hr>
+    <div class="blog-container">
         <?php if ($post['image']): ?>
-            <p><img src="<?php echo htmlspecialchars($post['image']); ?>" alt="<?php echo htmlspecialchars($post['title']); ?>" style="max-width: 90vw;"></p>
+            <p><img src="<?php echo htmlspecialchars($post['image']); ?>" alt="<?php echo htmlspecialchars($post['title']); ?>" style="max-width: 100%;"></p>
         <?php endif; ?>
         <div><?php echo nl2br(htmlspecialchars($post['content'])); ?></div>
+        </div>
         <hr>
         <p><a href="blog.php">Back to Blog</a></p>
-    </div>
        
     <?php
         else:
