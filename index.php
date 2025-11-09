@@ -36,7 +36,7 @@ include 'header.php';
             echo "<p>Post not found.</p>";
         endif;
     } else {
-        $posts = $posts->query("SELECT * FROM posts ORDER BY created_at DESC LIMIT 5");
+        $posts = $posts->query("SELECT * FROM posts ORDER BY created_at DESC");
         
         if ($posts && $posts->num_rows > 0):
             while ($post = $posts->fetch_assoc()):
@@ -50,7 +50,6 @@ include 'header.php';
         else:
     ?>
         <p>No blog posts yet. Check back soon!</p>
-        <p><a href="blog.php">View more blog</a></p>
     <?php
         endif;
     }
