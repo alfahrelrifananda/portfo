@@ -6,7 +6,7 @@ include 'header.php';
 <h1>About Me</h1>
     
     <h2>Who Am I?</h2>
-    <p>My name is Fahrel, I'm 20 years old \ male live in Indonesia.</p>
+    <p>My name is Fahrel, I'm 20 years old \ male live in Indonesia. I'm a web developer and GNU/LINUX Advocate.</p>
     
     <h2>Skills</h2>
     <ul>

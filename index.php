@@ -10,6 +10,7 @@ include 'header.php';
 
 <hr>
 
+    <h3>Latest Blog Posts</h3>
     <p><a href="rss.php">RSS Feed</a></p>
     
     <?php
@@ -39,7 +40,7 @@ include 'header.php';
         $posts = $conn->query("SELECT * FROM posts ORDER BY created_at DESC");
         
         $posts->data_seek(0);
-        $posts->data_seek(1);
+        $posts->data_seek(5);
         if ($posts && $posts->num_rows > 0):
             while ($post = $posts->fetch_assoc()):
     ?>
@@ -57,5 +58,6 @@ include 'header.php';
     }
     $conn->close();
     ?>
+    <p href="blog.php">View more posts</p>
 
 <?php include 'footer.php'; ?>
