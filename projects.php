@@ -22,7 +22,6 @@ include 'header.php';
             <p><a href="<?php echo htmlspecialchars($project['url']); ?>" target="_blank">View Project</a></p>
         <?php endif; ?>
         <p><small>Added on <?php echo date('F j, Y', strtotime($project['created_at'])); ?></small></p>
-        <hr>
     <?php
         endwhile;
     else:
