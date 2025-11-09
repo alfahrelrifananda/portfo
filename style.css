@@ -3,3 +3,8 @@ header {
     justify-content: space-between;
     align-items: center;
 }
+
+header h1 {
+    text-decoration: underline;
+    margin: 0;
+}

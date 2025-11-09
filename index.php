@@ -58,7 +58,6 @@ include 'header.php';
     }
     $conn->close();
     ?>
-    <hr>
     <a href="blog.php">View more posts</a>
 
 <?php include 'footer.php'; ?>
