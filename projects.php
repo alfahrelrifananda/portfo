@@ -15,7 +15,7 @@ include 'header.php';
     ?>
         <h2><?php echo htmlspecialchars($project['title']); ?></h2>
         <?php if ($project['image']): ?>
-            <p><img src="<?php echo htmlspecialchars($project['image']); ?>" alt="<?php echo htmlspecialchars($project['title']); ?>" width="400"></p>
+            <p><img src="<?php echo htmlspecialchars($project['image']); ?>" alt="<?php echo htmlspecialchars($project['title']); ?>" style="max-width: 90vw;" /></p>
         <?php endif; ?>
         <p><?php echo nl2br(htmlspecialchars($project['description'])); ?></p>
         <?php if ($project['url']): ?>
