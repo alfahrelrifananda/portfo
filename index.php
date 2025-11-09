@@ -35,8 +35,8 @@ include 'header.php';
         else:
             echo "<p>Post not found.</p>";
         endif;
-    } else {
-        $posts = $posts->query("SELECT * FROM posts ORDER BY created_at DESC");
+      } else {
+        $posts = $conn->query("SELECT * FROM posts ORDER BY created_at DESC");
         
         if ($posts && $posts->num_rows > 0):
             while ($post = $posts->fetch_assoc()):
