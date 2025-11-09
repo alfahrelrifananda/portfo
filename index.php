@@ -20,9 +20,14 @@
     
     <hr>
     
-    <h1>Welcome to My Portfolio</h1>
+    <h1>Welcome to My Site</h1>
     
-    <p>Hello! my name is Fahrel, and I'm a web developer from Indonesia.</p>
+    <p>Hello! my name is Fahrel, and I'm a web developer and free software enthusiast from Indonesia.</p>
+
+<p>
+
+This site is runnning through cloudflare tunnel sadly :(
+</p>
     
     <hr>
     <p><a href="projects.php">View All Projects</a> | <a href="contact.php">Get In Touch</a></p>
