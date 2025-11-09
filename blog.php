@@ -1,30 +1,11 @@
-<?php require_once 'config.php'; ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog - AlfahrelRifananda</title>
-    <link rel="alternate" type="application/rss+xml" title="Blog RSS Feed" href="rss.php">
-</head>
-<body>
-    <nav>
-        <a href="index.php">Home</a>
-        <a href="about.php">About</a>
-        <a href="projects.php">Projects</a>
-        <a href="blog.php">Blog</a>
-        <a href="contact.php">Contact</a>
-        <?php if (isLoggedIn()): ?>
-            <a href="dashboard.php">Dashboard</a>
-        <?php endif; ?>
-    </nav>
-    
-    <hr>
-    
-    <h1>Blog</h1>
+<?php
+require_once 'config.php';
+$title = 'Blog - AlfahrelRifananda';
+include 'header.php';
+?>
+
+<h1>Blog</h1>
     <p><a href="rss.php">RSS Feed</a></p>
-    
-    <hr>
     
     <?php
     $conn = getConnection();
@@ -69,11 +50,5 @@
     }
     $conn->close();
     ?>
-    
-     <footer> 
-        <hr>
-        <p><a href="projects.php">View All Projects</a> | <a href="contact.php">Get In Touch</a></p>    
-        © 2022 AlfahrelRifananda
-    </footer>
-</body>
-</html>
+
+<?php include 'footer.php'; ?>
