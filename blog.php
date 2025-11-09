@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog - My Portfolio</title>
+    <title>Blog - AlfahrelRifananda</title>
     <link rel="alternate" type="application/rss+xml" title="Blog RSS Feed" href="rss.php">
 </head>
 <body>

@@ -3,23 +3,26 @@ require_once 'config.php';
 
 $message = '';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = htmlspecialchars($_POST['name']);
     $email = htmlspecialchars($_POST['email']);
     $subject = htmlspecialchars($_POST['subject']);
     $msg = htmlspecialchars($_POST['message']);
 
     $to = "pahrel1234@gmail.com";
-    $full_subject = "Contact Form: " . $subject;
-    $body = "Name: $name\nEmail: $email\n\nMessage:\n$msg";
+    $full_subject = "Personal Site Contact: " . $subject;
+    $body = "You have a new message from your personal site:\n\n" .
+            "Name: $name\n" .
+            "Email: $email\n\n" .
+            "Message:\n$msg\n";
     $headers = "From: $email\r\n" .
                "Reply-To: $email\r\n" .
                "Content-Type: text/plain; charset=UTF-8\r\n";
 
     if (mail($to, $full_subject, $body, $headers)) {
-        $message = "Thank you for your message! I've received your email.";
+        $message = "Thank you for your message!";
     } else {
-        $message = "Sorry, something went wrong — email could not be sent.";
+        $message = "Sorry, something went wrong — the email could not be sent.";
     }
 }
 ?>
@@ -28,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - My Portfolio</title>
+    <title>Contact - AlfahrelRifananda</title>
 </head>
 <body>
     <nav>
@@ -37,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <a href="projects.php">Projects</a>
         <a href="blog.php">Blog</a>
         <a href="contact.php">Contact</a>
-        <?php if (isLoggedIn()): ?>
+        <?php if (function_exists('isLoggedIn') && isLoggedIn()): ?>
             <a href="dashboard.php">Dashboard</a>
         <?php endif; ?>
     </nav>
@@ -50,8 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <p><strong><?php echo $message; ?></strong></p>
         <hr>
     <?php endif; ?>
-
-    <h2>Get In Touch</h2>
 
     <form method="POST" action="">
         <p>
