@@ -1,6 +1,5 @@
 <?php
 require_once 'config.php';
-session_start();
 
 if (!isset($_SESSION['chat_username'])) {
     $_SESSION['chat_username'] = 'User' . rand(1000, 9999);
