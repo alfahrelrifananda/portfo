@@ -3,10 +3,12 @@ $title = 'Home - AlfahrelRifananda';
 include 'header.php';
 ?>
 
-<h1>About Me</h1>
+<h1>Tentang</h1>
     
     <h2>Bio singkat</h2>
     <p>Nama saya Fahrel, dan saya adalah seorang web developer dan GNU/LINUX Advocate.</p>
+    
+    <p>Saya bertempat tinggal di Surakarta.</p>
     <h2>Skills</h2>
     <ul>
         <li>PHP & MySQL</li>

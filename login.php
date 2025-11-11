@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
     
-    $error = "Invalid username or password";
+    $error = "Username atau password salah.";
     $conn->close();
 }
 ?>
@@ -57,6 +57,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </form>
     
     <hr>
-    <p><a href="index.php">[Back to Home]</a></p>
+    <p><a href="index.php">Kembali ke Beranda</a></p>
 </body>
 </html>

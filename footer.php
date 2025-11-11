@@ -1,8 +1,8 @@
         <footer>
         <hr>
         <p>
-            <a href="projects.php">View All Projects</a> |
-            <a href="contact.php">Get In Touch</a>
+            <a href="projects.php">Lihat Proyek</a> |
+            <a href="contact.php">Hubungi Saya</a> |
         </p>
         © <?= date('Y') ?> AlfahrelRifananda
     </footer>

@@ -19,14 +19,15 @@ require_once 'config.php';
     <header>
         <h1><u>AlfahrelRifananda</u></h1>
         <nav>
-            <a href="index.php">Home</a> | 
-            <a href="about.php">About</a> | 
-            <a href="projects.php">Projects</a> | 
+            <a href="index.php">Beranda</a> | 
+            <a href="about.php">Tentang</a> | 
+            <a href="projects.php">Proyek</a> | 
             <a href="blog.php">Blog</a> | 
-            <a href="contact.php">Contact</a>
+            <a href="contact.php">Kontak</a>
             <?php if (function_exists('isLoggedIn') && isLoggedIn()): ?>
                 | <a href="dashboard.php">Dashboard</a>
             <?php endif; ?>
+            <a href="chat.php">Chat</a>
         </nav>
     </header>
     

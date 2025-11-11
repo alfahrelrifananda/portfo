@@ -4,7 +4,7 @@ $title = 'Home - AlfahrelRifananda';
 include 'header.php';
 ?>
 
-<h1>My Projects</h1>
+<h1>Proyek Saya</h1>
     
     <?php
     $conn = getConnection();
@@ -21,7 +21,7 @@ include 'header.php';
         <?php if ($project['url']): ?>
             <p><a href="<?php echo htmlspecialchars($project['url']); ?>" target="_blank">View Project</a></p>
         <?php endif; ?>
-        <p><small>Added on <?php echo date('F j, Y', strtotime($project['created_at'])); ?></small></p>
+        <p><small>Ditambahkan pada <?php echo date('j F Y', strtotime($project['created_at'])); ?></small></p>
     <?php
         endwhile;
     else:

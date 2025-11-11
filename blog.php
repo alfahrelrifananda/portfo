@@ -16,7 +16,7 @@ include 'header.php';
         if ($post):
     ?>
         <h2><?php echo htmlspecialchars($post['title']); ?></h2>
-        <p><small>Oleh <?php echo htmlspecialchars($post['author']); ?> pada tanggal <?php echo date('F j, Y', strtotime($post['created_at'])); ?></small></p>
+        <p><small>Oleh <?php echo htmlspecialchars($post['author']); ?> pada tanggal <?php echo date('j F Y', strtotime($post['created_at'])); ?></small></p>
         <hr>
     <div class="blog-container">
         <?php if ($post['image']): ?>
@@ -38,7 +38,7 @@ include 'header.php';
             while ($post = $posts->fetch_assoc()):
     ?>
         <h2><a href="blog.php?id=<?php echo $post['id']; ?>"><?php echo htmlspecialchars($post['title']); ?></a></h2>
-        <p><small>Oleh <?php echo htmlspecialchars($post['author']); ?> pada tanggal <?php echo date('F j, Y', strtotime($post['created_at'])); ?></small></p>
+        <p><small>Oleh <?php echo htmlspecialchars($post['author']); ?> pada tanggal <?php echo date('j F Y', strtotime($post['created_at'])); ?></small></p>
         <p><?php echo nl2br(htmlspecialchars(substr($post['content'], 0, 200))); ?>...</p>
         <p><a href="blog.php?id=<?php echo $post['id']; ?>">Baca selengkapnya</a></p>
     <?php

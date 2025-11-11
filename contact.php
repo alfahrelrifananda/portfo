@@ -36,14 +36,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // file_put_contents($log_file, $log_message, FILE_APPEND);
 
     if ($result) {
-        $message = "Email successfully sent!";
+        $message = "Email berhasil terkirim!";
     } else {
-        $message = "Could not send email.";
+        $message = "Tidak bisa mengirim email :(.";
     }
 }
 ?>
 
-<h1>Contact Me</h1>
+<h1>Kontak</h1>
 
     <?php if ($message): ?>
         <p><strong><?php echo $message; ?></strong></p>
@@ -51,11 +51,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
 
     <form method="POST" action="">
-        <p><label>Name *</label><br><input type="text" name="name" required></p>
+        <p><label>Nama *</label><br><input type="text" name="name" required></p>
         <p><label>Email *</label><br><input type="email" name="email" required></p>
-        <p><label>Subject *</label><br><input type="text" name="subject" required></p>
-        <p><label>Message *</label><br><textarea name="message" rows="6" required></textarea></p>
-        <p><button type="submit">Send Message</button></p>
+        <p><label>Subyek *</label><br><input type="text" name="subject" required></p>
+        <p><label>Pesan *</label><br><textarea name="message" rows="6" required></textarea></p>
+        <p><button type="submit">Kirim pesan</button></p>
     </form>
 
 <?php include 'footer.php'; ?>
