@@ -38,8 +38,6 @@ include 'header.php';
       } else {
         $posts = $conn->query("SELECT * FROM posts ORDER BY created_at DESC");
         
-        $posts->data_seek(0);
-        $posts->data_seek(5);
         if ($posts && $posts->num_rows > 0):
             while ($post = $posts->fetch_assoc()):
     ?>
