@@ -3,7 +3,7 @@ require_once 'config.php';
 $title = 'Blog - AlfahrelRifananda';
 include 'header.php';
 ?>
-<p>Untuk versi rss blog ini, silahkan klik <a href="rss.php">sini</a>.</p>
+<p>Untuk versi rss blog ini, silahkan klik <a href="rss.php">disini</a>.</p>
 <hr>
 <?php
     $conn = getConnection();

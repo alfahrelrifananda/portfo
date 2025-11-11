@@ -5,12 +5,12 @@ include 'header.php';
 ?>
 
 <h1>Selamat datang!</h1>
-<p>Halo! nama saya Fahrel, dan saya adalah seorang web developer dan GNU/LINUX Advocate.</p>
+<p>Halo! perkenalkan saya Fahrel, dan saya adalah seorang web developer dan GNU/LINUX Advocate.</p>
 
 <hr>
 
     <h2>Postingan terbaru</h2>
-    <p>Untuk versi rss blog ini, silahkan klik <a href="rss.php">sini</a>.</p>
+    <p>Untuk versi rss blog ini, silahkan klik <a href="rss.php">disini</a>.</p>
     
     <?php
     $conn = getConnection();

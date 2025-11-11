@@ -27,7 +27,6 @@ require_once 'config.php';
             <?php if (function_exists('isLoggedIn') && isLoggedIn()): ?>
                 | <a href="dashboard.php">Dashboard</a>
             <?php endif; ?>
-            <a href="chat.php">Chat</a>
         </nav>
     </header>
     

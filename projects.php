@@ -4,7 +4,7 @@ $title = 'Home - AlfahrelRifananda';
 include 'header.php';
 ?>
 
-<h1>Proyek Saya</h1>
+<h1>Proyek</h1>
     
     <?php
     $conn = getConnection();
@@ -19,7 +19,7 @@ include 'header.php';
         <?php endif; ?>
         <p><?php echo nl2br(htmlspecialchars($project['description'])); ?></p>
         <?php if ($project['url']): ?>
-            <p><a href="<?php echo htmlspecialchars($project['url']); ?>" target="_blank">View Project</a></p>
+            <p><a href="<?php echo htmlspecialchars($project['url']); ?>" target="_blank">Link github</a></p>
         <?php endif; ?>
         <p><small>Ditambahkan pada <?php echo date('j F Y', strtotime($project['created_at'])); ?></small></p>
     <?php
