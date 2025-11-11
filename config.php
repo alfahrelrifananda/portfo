@@ -1,10 +1,23 @@
 <?php
+function loadEnv($file) {
+    if (file_exists($file)) {
+        $lines = file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        foreach ($lines as $line) {
+            if (strpos(trim($line), '#') === 0) continue; 
+            list($key, $value) = explode('=', $line, 2);
+            $_ENV[trim($key)] = trim($value);
+        }
+    }
+}
+
+loadEnv(__DIR__ . '/.env');
+
 function getConnection() {
-    $host = '127.0.0.1';
-    $username = 'root';
-    $password = 'root';
-    $dbname = 'db_portfolio';
-    $port = 3306;
+    $host = $_ENV['DB_HOST'];
+    $username = $_ENV['DB_USERNAME'];
+    $password = $_ENV['DB_PASSWORD'];
+    $dbname = $_ENV['DB_DATABASE'];
+    $port = $_ENV['DB_PORT'];
 
     $conn = new mysqli($host, $username, $password, $dbname, $port);
 
