@@ -4,11 +4,6 @@ require_once 'config.php';
 $conn = getConnection();
 
 $result = $conn->query("SELECT * FROM admin_users");
-echo "<h3>Users in database:</h3>";
-while ($row = $result->fetch_assoc()) {
-    echo "Username: " . $row['username'] . "<br>";
-    echo "Password hash: " . $row['password'] . "<br><br>";
-}
 
 $username = $_ENV['ADMIN_TEST_USERNAME'];
 $password = $_ENV['ADMIN_TEST_PASSWORD_1'];
