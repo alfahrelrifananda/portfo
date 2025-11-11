@@ -2,8 +2,14 @@
     max-width: 500px;
 }
 
+.contact-form {
+    max-width: 500px;
+}
 @media (max-width: 1000px) {
     .blog-container {
         max-width: 100%;
+    }
+    .contact-form {
+        width: 100%;
     }
 }
