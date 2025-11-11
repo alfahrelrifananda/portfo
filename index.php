@@ -41,7 +41,7 @@ include 'header.php';
         <?php
         if ($posts && $posts->num_rows > 0):
             $i = 0;
-            while ($post = $posts->fetch_assoc() && $i < 3):
+            while (($post = $posts->fetch_assoc()) && $i < 3):
             $i++;
     ?>
         <h2><a href="blog.php?id=<?php echo $post['id']; ?>"><?php echo htmlspecialchars($post['title']); ?></a></h2>
