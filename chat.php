@@ -9,7 +9,6 @@ $username = $_SESSION['chat_username'];
 
 $conn = getConnection();
 
-// Clean up old data (older than 1 day)
 $conn->query("DELETE FROM chat_messages WHERE created_at < DATE_SUB(NOW(), INTERVAL 1 DAY)");
 $conn->query("DELETE FROM chat_users WHERE last_seen < DATE_SUB(NOW(), INTERVAL 1 DAY)");
 

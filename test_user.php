@@ -10,8 +10,8 @@ while ($row = $result->fetch_assoc()) {
     echo "Password hash: " . $row['password'] . "<br><br>";
 }
 
-$username = 'fahrel';
-$password = 'admin123';
+$username = $_ENV['ADMIN_TEST_USERNAME'];
+$password = $_ENV['ADMIN_TEST_PASSWORD_2'];
 
 $stmt = $conn->prepare("SELECT * FROM admin_users WHERE username = ?");
 $stmt->bind_param("s", $username);
@@ -36,4 +36,4 @@ if ($user = $result->fetch_assoc()) {
 }
 
 $conn->close();
-?>%   
+?>

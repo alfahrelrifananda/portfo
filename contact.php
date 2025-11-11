@@ -1,8 +1,10 @@
 <?php
-ini_set('sendmail_path', '/data/data/com.termux/files/usr/bin/sendmail -t -i');
+require_once 'config.php';
+
+ini_set('sendmail_path', $_ENV['SENDMAIL_PATH']);
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-require_once 'config.php';
+
 $title = 'Home - AlfahrelRifananda';
 include 'header.php';
 
@@ -14,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $subject = htmlspecialchars($_POST['subject']);
     $msg = htmlspecialchars($_POST['message']);
 
-    $to = "pahrel1234@gmail.com";
+    $to = $_ENV['CONTACT_EMAIL'];
     $full_subject = "Personal Contact: " . $subject;
     $body = "You have a new message from your site:\n\n" .
             "Name: $name\n" .
