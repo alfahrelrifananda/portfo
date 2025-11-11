@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <p><label>Email *</label><br><input type="email" name="email" required></p>
         <p><label>Subyek *</label><br><input type="text" name="subject" required></p>
         <p><label>Pesan *</label><br><textarea name="message" rows="6" required></textarea></p>
-        <p><button type="submit">Kirim pesan</button></p>
+        <p><button type="submit">Kirim email</button></p>
     </form>
 
 <?php include 'footer.php'; ?>
