@@ -3,7 +3,7 @@ require_once 'config.php';
 $title = 'Blog - AlfahrelRifananda';
 include 'header.php';
 ?>
-<a href="rss.php">RSS feed</a>
+<p>Untuk versi rss blog ini, silahkan klik <a href="rss.php">sini</a>.</p>
 <hr>
 <?php
     $conn = getConnection();
@@ -16,7 +16,7 @@ include 'header.php';
         if ($post):
     ?>
         <h2><?php echo htmlspecialchars($post['title']); ?></h2>
-        <p><small>By <?php echo htmlspecialchars($post['author']); ?> on <?php echo date('F j, Y', strtotime($post['created_at'])); ?></small></p>
+        <p><small>Oleh <?php echo htmlspecialchars($post['author']); ?> pada tanggal <?php echo date('F j, Y', strtotime($post['created_at'])); ?></small></p>
         <hr>
     <div class="blog-container">
         <?php if ($post['image']): ?>
@@ -25,11 +25,11 @@ include 'header.php';
         <div><?php echo nl2br(htmlspecialchars($post['content'])); ?></div>
         </div>
         <hr>
-        <p><a href="blog.php">Back to Blog</a></p>
+        <p><a href="blog.php">Kembali ke Blog</a></p>
        
     <?php
         else:
-            echo "<p>Post not found.</p>";
+            echo "<p>Posting tidak dapat ditemukan.</p>";
         endif;
     } else {
         $posts = $conn->query("SELECT * FROM posts ORDER BY created_at DESC");
@@ -38,14 +38,14 @@ include 'header.php';
             while ($post = $posts->fetch_assoc()):
     ?>
         <h2><a href="blog.php?id=<?php echo $post['id']; ?>"><?php echo htmlspecialchars($post['title']); ?></a></h2>
-        <p><small>By <?php echo htmlspecialchars($post['author']); ?> on <?php echo date('F j, Y', strtotime($post['created_at'])); ?></small></p>
+        <p><small>Oleh <?php echo htmlspecialchars($post['author']); ?> pada tanggal <?php echo date('F j, Y', strtotime($post['created_at'])); ?></small></p>
         <p><?php echo nl2br(htmlspecialchars(substr($post['content'], 0, 200))); ?>...</p>
-        <p><a href="blog.php?id=<?php echo $post['id']; ?>">Read more</a></p>
+        <p><a href="blog.php?id=<?php echo $post['id']; ?>">Baca selengkapnya</a></p>
     <?php
             endwhile;
         else:
     ?>
-        <p>No blog posts yet. Check back soon!</p>
+        <p>Belum ada postingan. Silahkan cek kembali nanti!</p>
     <?php
         endif;
     }

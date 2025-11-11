@@ -4,14 +4,13 @@ $title = 'Home - AlfahrelRifananda';
 include 'header.php';
 ?>
 
-<h1>Welcome to My Site</h1>
-<p>Hello! my name is Fahrel, and I'm a web developer and GNU/LINUX Advocate.</p>
-<p>Sadly, this site is running through Cloudflare Tunnel because I'm using a VPS and don’t have a static IP.</p>
+<h1>Selamat datang!</h1>
+<p>Halo! nama saya Fahrel, dan saya adalah seorang web developer dan GNU/LINUX Advocate.</p>
 
 <hr>
 
-    <h2>Latest Blog Posts</h2>
-    <p><a href="rss.php">RSS Feed</a></p>
+    <h2>Postingan terbaru</h2>
+    <p>Untuk versi rss blog ini, silahkan klik <a href="rss.php">sini</a>.</p>
     
     <?php
     $conn = getConnection();
@@ -24,17 +23,17 @@ include 'header.php';
         if ($post):
     ?>
         <h2><?php echo htmlspecialchars($post['title']); ?></h2>
-        <p><small>By <?php echo htmlspecialchars($post['author']); ?> on <?php echo date('F j, Y', strtotime($post['created_at'])); ?></small></p>
+        <p><small>Oleh <?php echo htmlspecialchars($post['author']); ?> pada tanggal <?php echo date('F j, Y', strtotime($post['created_at'])); ?></small></p>
         <hr>
         <?php if ($post['image']): ?>
             <p><img src="<?php echo htmlspecialchars($post['image']); ?>" alt="<?php echo htmlspecialchars($post['title']); ?>" style="max-width: 90vw;"></p>
         <?php endif; ?>
         <div><?php echo nl2br(htmlspecialchars($post['content'])); ?></div>
         <hr>
-        <p><a href="blog.php">Back to Blog</a></p>
+        <p><a href="blog.php">Kembali ke Blog</a></p>
     <?php
         else:
-            echo "<p>Post not found.</p>";
+            echo "<p>postingan tidak dapat ditemukan.</p>";
         endif;
       } else {
         $posts = $conn->query("SELECT * FROM posts ORDER BY created_at DESC");
@@ -45,19 +44,19 @@ include 'header.php';
             while ($post = $posts->fetch_assoc()):
     ?>
         <h2><a href="blog.php?id=<?php echo $post['id']; ?>"><?php echo htmlspecialchars($post['title']); ?></a></h2>
-        <p><small>By <?php echo htmlspecialchars($post['author']); ?> on <?php echo date('F j, Y', strtotime($post['created_at'])); ?></small></p>
+        <p><small>Oleh <?php echo htmlspecialchars($post['author']); ?> pada tanggal <?php echo date('F j, Y', strtotime($post['created_at'])); ?></small></p>
         <p><?php echo nl2br(htmlspecialchars(substr($post['content'], 0, 200))); ?>...</p>
-        <p><a href="blog.php?id=<?php echo $post['id']; ?>">Read more</a></p>
+        <p><a href="blog.php?id=<?php echo $post['id']; ?>">Baca selengkapnya</a></p>
     <?php
             endwhile;
         else:
     ?>
-        <p>No blog posts yet. Check back soon!</p>
+        <p>Belum ada postingan. Silahkan cek kembali nanti!</p>
     <?php
         endif;
     }
     $conn->close();
     ?>
-    <a href="blog.php">View more posts</a>
+    <a href="blog.php">Lihat semua postingan</a>
 
 <?php include 'footer.php'; ?>

@@ -5,9 +5,8 @@ include 'header.php';
 
 <h1>About Me</h1>
     
-    <h2>Short Bio</h2>
-    <p>My name is Fahrel, I'm 20 years old live in Indonesia. I'm a web developer and GNU/LINUX Advocate.</p>
-    
+    <h2>Bio singkat</h2>
+    <p>Nama saya Fahrel, dan saya adalah seorang web developer dan GNU/LINUX Advocate.</p>
     <h2>Skills</h2>
     <ul>
         <li>PHP & MySQL</li>
@@ -17,7 +16,7 @@ include 'header.php';
         <li>Database Design</li>
     </ul>
     
-    <h2>Experience</h2>
-    <p>Ive got some Experience in Web Development, as a WordPress Developer back in 2024 when I was doing my intern.</p>
+    <h2>Pengalaman</h2>
+    <p>Saya memiliki beberapa pengalaman di bidang web development, sebagai WordPress Developer ketika magang pada tahun 2024 - 2025</p>
 
 <?php include 'footer.php'; ?>
