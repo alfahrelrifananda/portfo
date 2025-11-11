@@ -14,7 +14,7 @@ include 'header.php';
         if ($post):
     ?>
         <h2><?php echo htmlspecialchars($post['title']); ?></h2>
-        <p><b><?php echo date('j F Y', strtotime($post['created_at'])); ?></b></p>
+        <p><small><?php echo date('j F Y', strtotime($post['created_at'])); ?></small></p>
         <hr>
     <div class="blog-container">
         <?php if ($post['image']): ?>

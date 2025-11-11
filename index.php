@@ -23,7 +23,7 @@ include 'header.php';
         if ($post):
     ?>
         <h2><?php echo htmlspecialchars($post['title']); ?></h2>
-        <p><b><?php echo date('j F Y', strtotime($post['created_at'])); ?></b></p>
+        <p><small><?php echo date('j F Y', strtotime($post['created_at'])); ?></small></p>
         <hr>
         <?php if ($post['image']): ?>
             <p><img src="<?php echo htmlspecialchars($post['image']); ?>" alt="<?php echo htmlspecialchars($post['title']); ?>" style="max-width: 90vw;"></p>
