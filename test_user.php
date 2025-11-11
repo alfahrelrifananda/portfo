@@ -20,16 +20,9 @@ $result = $stmt->get_result();
 
 if ($user = $result->fetch_assoc()) {
     echo "<h3>User found:</h3>";
-    echo "Username: " . $user['username'] . "<br>";
-    echo "Stored hash: " . $user['password'] . "<br>";
     
     if (password_verify($password, $user['password'])) {
         echo "<strong style='color:green;'>Password verification: SUCCESS!</strong>";
-    } else {
-        echo "<strong style='color:red;'>Password verification: FAILED!</strong><br>";
-        echo "Testing with new hash...<br>";
-        $newHash = password_hash($password, PASSWORD_DEFAULT);
-        echo "New hash would be: " . $newHash . "<br>";
     }
 } else {
     echo "<strong style='color:red;'>User not found!</strong>";
