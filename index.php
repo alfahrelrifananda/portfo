@@ -40,7 +40,9 @@ include 'header.php';
         <p>Untuk versi rss, silahkan klik <a href="rss.php">disini</a>.</p>
         <?php
         if ($posts && $posts->num_rows > 0):
-            while ($post = $posts->fetch_assoc()):
+            $i = 0;
+            while ($post = $posts->fetch_assoc() && $i < 3):
+            $i++;
     ?>
         <h2><a href="blog.php?id=<?php echo $post['id']; ?>"><?php echo htmlspecialchars($post['title']); ?></a></h2>
         <p><b><?php echo date('j F Y', strtotime($post['created_at'])); ?></b></p>
