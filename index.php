@@ -10,11 +10,16 @@ include 'header.php';
 <hr>
 
     <h2>Postingan terbaru</h2>
-    <p>Untuk versi rss blog ini, silahkan klik <a href="rss.php">disini</a>.</p>
+    
     
     <?php
     $conn = getConnection();
     
+    if (isset($_GET['id']) == null) {
+    ?>
+    <p>Untuk versi rss blog ini, silahkan klik <a href="rss.php">disini</a>.</p>
+    <?php
+    }
     if (isset($_GET['id'])) {
         $id = (int)$_GET['id'];
         $result = $conn->query("SELECT * FROM posts WHERE id=$id");
@@ -29,8 +34,6 @@ include 'header.php';
             <p><img src="<?php echo htmlspecialchars($post['image']); ?>" alt="<?php echo htmlspecialchars($post['title']); ?>" style="max-width: 90vw;"></p>
         <?php endif; ?>
         <div><?php echo nl2br(htmlspecialchars($post['content'])); ?></div>
-        <hr>
-        <p><a href="blog.php">Kembali ke Blog</a></p>
     <?php
         else:
             echo "<p>postingan tidak dapat ditemukan.</p>";

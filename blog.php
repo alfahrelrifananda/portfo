@@ -24,12 +24,10 @@ include 'header.php';
         <?php endif; ?>
         <div><?php echo nl2br(htmlspecialchars($post['content'])); ?></div>
         </div>
-        <hr>
-        <p><a href="blog.php">Kembali ke Blog</a></p>
        
     <?php
         else:
-            echo "<p>Posting tidak dapat ditemukan.</p>";
+            echo "<p>Postingan tidak dapat ditemukan.</p>";
         endif;
     } else {
         $posts = $conn->query("SELECT * FROM posts ORDER BY created_at DESC");
