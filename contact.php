@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <hr>
     <?php endif; ?>
 
-    <form method="POST" action="">
+    <form method="POST" action="" class="kontak-container">
         <p><label>Nama *</label><br><input type="text" name="name" required></p>
         <p><label>Email *</label><br><input type="email" name="email" required></p>
         <p><label>Subyek *</label><br><input type="text" name="subject" required></p>

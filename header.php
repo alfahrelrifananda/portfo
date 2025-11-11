@@ -17,7 +17,9 @@ require_once 'config.php';
 </head>
 <body>
     <header>
+        <a href="/">
         <h1><u>AlfahrelRifananda</u></h1>
+        </a>
         <nav>
             <a href="index.php">Beranda</a> | 
             <a href="about.php">Tentang</a> | 
