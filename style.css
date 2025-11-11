@@ -1,4 +1,7 @@
-
+body {
+  margin: 0 auto;
+  width: 500px;
+}
 .blog-container {
   max-width: 500px;
 }
@@ -8,19 +11,20 @@
 }
 
 @media (max-width: 1000px) {
+  body {
+    width: 100%;
+    margin: 0;
+  }
   .blog-container {
     max-width: 100%;
   }
-  
   .kontak-container {
     max-width: 100%;
     overflow: hidden;
   }
-  
   .kontak-container p {
     width: 100%;
   }
-  
   .kontak-container input, .kontak-container textarea {
     width: 90% !important;
   }
