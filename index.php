@@ -37,7 +37,7 @@ include 'header.php';
       else {
         $posts = $conn->query("SELECT * FROM posts ORDER BY created_at DESC");
         ?>
-        <p>Untuk versi rss blog ini, silahkan klik <a href="rss.php">disini</a>.</p>
+        <p>Untuk versi rss, silahkan klik <a href="rss.php">disini</a>.</p>
         <?php
         if ($posts && $posts->num_rows > 0):
             while ($post = $posts->fetch_assoc()):

@@ -3,7 +3,6 @@ require_once 'config.php';
 $title = 'Blog - AlfahrelRifananda';
 include 'header.php';
 ?>
-
 <?php
     $conn = getConnection();
     
@@ -32,7 +31,7 @@ include 'header.php';
         $posts = $conn->query("SELECT * FROM posts ORDER BY created_at DESC");
     
         ?>
-        <p>Untuk versi rss blog ini, silahkan klik <a href="rss.php">disini</a>.</p>
+        <p>Untuk versi rss, silahkan klik <a href="rss.php">disini</a>.</p>
     <hr>
     <?php
         if ($posts && $posts->num_rows > 0):
