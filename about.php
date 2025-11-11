@@ -8,10 +8,10 @@ include 'header.php';
     <h2>Bio singkat</h2>
     <p>Nama saya Fahrel, dan saya adalah seorang web developer dan GNU/LINUX Advocate.</p>
     <p>Saya berusia 20 tahun, dan saya berasal dari Surakarta, Jawa Tengah.</p>
-    <p>Saat ini saya tidak memiliki kesibukkan apapun jadi silahkan jika ingin <a href="contact.php">Menghubungi saya</a></p>
+    <p>Saat ini saya tidak memiliki kesibukkan apapun jadi silahkan jika ingin <a href="contact.php">menghubungi saya</a>.</p>
 
     <h2>Proyek</h2>
-    <p>Saya memiliki beberapa proyek berbasis web dan aplikasi mobile, berikut <a href="projects.php">Diantaranya</a>.</p>
+    <p>Saya memiliki beberapa proyek berbasis web dan aplikasi mobile, berikut <a href="projects.php">diantaranya</a>.</p>
     
     <h2>Skills</h2>
     <ul>
