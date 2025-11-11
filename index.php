@@ -6,6 +6,7 @@ include 'header.php';
 
 <h1>Selamat datang!</h1>
 <p>Halo! perkenalkan saya Fahrel, dan saya adalah seorang web developer dan GNU/LINUX Advocate.</p>
+<a href="about.php">Selengkapnya tentang saya</a>
 
 <hr>
 
