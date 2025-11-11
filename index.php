@@ -14,12 +14,7 @@ include 'header.php';
     
     <?php
     $conn = getConnection();
-    
-    if (isset($_GET['id']) == null) {
-    ?>
-    <p>Untuk versi rss blog ini, silahkan klik <a href="rss.php">disini</a>.</p>
-    <?php
-    }
+
     if (isset($_GET['id'])) {
         $id = (int)$_GET['id'];
         $result = $conn->query("SELECT * FROM posts WHERE id=$id");
@@ -38,9 +33,12 @@ include 'header.php';
         else:
             echo "<p>postingan tidak dapat ditemukan.</p>";
         endif;
-      } else {
+      }
+      else {
         $posts = $conn->query("SELECT * FROM posts ORDER BY created_at DESC");
-        
+        ?>
+        <p>Untuk versi rss blog ini, silahkan klik <a href="rss.php">disini</a>.</p>
+        <?php
         if ($posts && $posts->num_rows > 0):
             while ($post = $posts->fetch_assoc()):
     ?>
