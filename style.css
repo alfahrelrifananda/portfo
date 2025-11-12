@@ -15,23 +15,16 @@ a {
 }
 
 .blog-container {
-  max-width: 50%;
+  max-width: 100%;
 }
 
 .kontak-container {
-  max-width: 50%;
+  max-width: 100%;
 }
 
 @media (max-width: 1000px) {
   body {
     width: 100%;
-  }
-  .blog-container {
-    max-width: 100%;
-  }
-  .kontak-container {
-    max-width: 100%;
-    overflow: hidden;
   }
   .kontak-container p {
     width: 100%;
