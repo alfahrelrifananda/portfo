@@ -1,19 +1,30 @@
-body {
-  margin: 0 auto;
-  width: 500px;
+:root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --link-color: #0119f7;
 }
+
+body {
+  width: 50%;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+a {
+  color: var(--link-color);
+}
+
 .blog-container {
-  max-width: 500px;
+  max-width: 50%;
 }
 
 .kontak-container {
-  max-width: 500px;
+  max-width: 50%;
 }
 
 @media (max-width: 1000px) {
   body {
     width: 100%;
-    margin: 0;
   }
   .blog-container {
     max-width: 100%;
@@ -25,7 +36,8 @@ body {
   .kontak-container p {
     width: 100%;
   }
-  .kontak-container input, .kontak-container textarea {
+  .kontak-container input,
+  .kontak-container textarea {
     width: 90% !important;
   }
 }

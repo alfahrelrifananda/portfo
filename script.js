@@ -1,57 +1,32 @@
 const themeToggle = document.getElementById("theme-toggle");
-const aElement = document.querySelectorAll("a");
 
 themeToggle.addEventListener("click", () => {
   const body = document.body;
-  body.classList.toggle("light");
-  body.classList.toggle("dark");
-  localStorage.setItem(
-    "theme",
-    body.classList.contains("light") ? "light" : "dark"
-  );
+  const currentTheme = body.classList.contains("light") ? "dark" : "light";
 
-  if (localStorage.getItem("theme") === "light") {
-    body.style.backgroundColor = "#ffffff";
-    body.style.color = "#000000";
-    aElement.forEach((element) => {
-      element.style.color = "#000000";
-    });
-  } else {
-    body.style.backgroundColor = "#131313";
-    body.style.color = "#f3f3f3";
-    aElement.forEach((element) => {
-      element.style.color = "#f3f3f3";
-    });
-  }
+  body.classList.remove("light", "dark");
+  body.classList.add(currentTheme);
+
+  localStorage.setItem("theme", currentTheme);
+  applyTheme(currentTheme);
 });
 
-window.onload = () => {
-  const theme = localStorage.getItem("theme");
+function applyTheme(theme) {
+  const root = document.documentElement;
 
   if (theme === "light") {
-    document.body.classList.add("light");
-    document.body.style.backgroundColor = "#ffffff";
-    document.body.style.color = "#000000";
-    aElement.forEach((element) => {
-      element.style.color = "#000000";
-    });
-  } else if (theme === "dark") {
-    document.body.classList.add("dark");
-    document.body.style.backgroundColor = "#131313";
-    document.body.style.color = "#f3f3f3";
-    aElement.forEach((element) => {
-      element.style.color = "#f3f3f3";
-    });
+    root.style.setProperty("--bg-color", "#ffffff");
+    root.style.setProperty("--text-color", "#000000");
+    root.style.setProperty("--link-color", "#0119f7");
   } else {
-    const body = document.body;
-    body.classList.toggle("light");
-    body.classList.toggle("dark");
-    aElement.forEach((element) => {
-      element.style.color = "#000000";
-    });
-    localStorage.setItem(
-      "theme",
-      body.classList.contains("light") ? "light" : "dark"
-    );
+    root.style.setProperty("--bg-color", "#131313");
+    root.style.setProperty("--text-color", "#f3f3f3");
+    root.style.setProperty("--link-color", "#7a88ffff");
   }
+}
+
+window.onload = () => {
+  const theme = localStorage.getItem("theme") || "light";
+  document.body.classList.add(theme);
+  applyTheme(theme);
 };
