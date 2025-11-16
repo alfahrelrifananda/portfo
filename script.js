@@ -21,7 +21,7 @@ function applyTheme(theme) {
   } else {
     root.style.setProperty("--bg-color", "#131313");
     root.style.setProperty("--text-color", "#f3f3f3");
-    root.style.setProperty("--link-color", "#7a88ffff");
+    root.style.setProperty("--link-color", "#f3f3f3");
   }
 }
 

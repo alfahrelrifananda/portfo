@@ -1,6 +1,6 @@
         <footer>
         <hr>
-        <button id="theme-toggle">Ubah tema</button>
+        <!-- <button id="theme-toggle">Ubah tema</button> -->
         
         <p>
             <a href="projects.php">Lihat Proyek</a> |

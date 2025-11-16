@@ -6,7 +6,6 @@ if (!isset($_SESSION['chat_username'])) {
 }
 
 $username = $_SESSION['chat_username'];
-
 $conn = getConnection();
 
 $conn->query("DELETE FROM chat_messages WHERE created_at < DATE_SUB(NOW(), INTERVAL 1 DAY)");
