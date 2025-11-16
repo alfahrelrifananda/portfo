@@ -6,7 +6,7 @@ include 'header.php';
 
 <h1>Selamat datang!</h1>
 <p>Halo! perkenalkan nama saya Fahrel.</p>
-<a href="about.php">Selengkapnya</a>
+<!-- <a href="about.php">Selengkapnya</a> -->
 
 <hr>
 

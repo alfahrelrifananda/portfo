@@ -22,7 +22,7 @@ require_once 'config.php';
         </a>
         <nav>
             <a href="index.php">Beranda</a> | 
-            <a href="about.php">Tentang</a> | 
+            <!-- <a href="about.php">Tentang</a> |  -->
             <a href="projects.php">Proyek</a> | 
             <a href="blog.php">Blog</a> | 
             <a href="contact.php">Kontak</a>
