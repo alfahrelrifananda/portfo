@@ -30,56 +30,313 @@ $conn->close();
     <title>Chat - <?php echo htmlspecialchars($username); ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: Arial, sans-serif; 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column;
+            background: #f5f5f5;
+        }
+        
+        /* Header */
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .header h1 {
+            font-size: 18px;
+            font-weight: normal;
+        }
+        .username-form {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+        .username-form input {
+            padding: 6px 10px;
+            border: none;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+        .username-form button {
+            padding: 6px 12px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .username-form button:hover {
+            background: #229954;
+        }
+        
+        /* Main container */
+        .container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background: white;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar-header {
+            padding: 12px 15px;
+            background: #ecf0f1;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .user-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px 15px;
+        }
+        .user-item {
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+        }
+        
+        /* Chat area */
+        .chat-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: white;
+        }
+        .messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            background: #fafafa;
+        }
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            border-left: 3px solid #3498db;
+        }
+        .message-header {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-size: 13px;
+        }
+        .message-time {
+            color: #7f8c8d;
+            font-size: 11px;
+        }
+        .message-content {
+            margin-top: 5px;
+            line-height: 1.4;
+            font-size: 14px;
+            word-wrap: break-word;
+        }
+        .message-image {
+            margin-top: 8px;
+        }
+        .message-image img {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .message-file {
+            margin-top: 8px;
+            padding: 8px 12px;
+            background: #ecf0f1;
+            border-radius: 3px;
+            display: inline-block;
+        }
+        .message-file a {
+            color: #2c3e50;
+            text-decoration: none;
+        }
+        .message-file a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Input area */
+        .input-area {
+            border-top: 1px solid #ddd;
+            padding: 15px;
+            background: white;
+        }
+        .file-preview {
+            margin-bottom: 10px;
+            padding: 8px;
+            background: #e8f5e9;
+            border-radius: 3px;
+            font-size: 13px;
+            display: none;
+        }
+        .file-preview.active {
+            display: block;
+        }
+        .file-preview button {
+            margin-left: 10px;
+            padding: 4px 8px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .input-form {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+        }
+        .input-form input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+        .input-form input[type="text"]:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        .file-input-label {
+            padding: 10px 15px;
+            background: #95a5a6;
+            color: white;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+        .file-input-label:hover {
+            background: #7f8c8d;
+        }
+        .file-input-label input {
+            display: none;
+        }
+        .input-form button {
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+        .input-form button:hover {
+            background: #2980b9;
+        }
+        .input-info {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #7f8c8d;
+        }
+        
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                max-height: 150px;
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+            }
+            .header {
+                padding: 10px;
+            }
+            .header h1 {
+                font-size: 16px;
+            }
+            .username-form {
+                width: 100%;
+            }
+            .username-form input {
+                flex: 1;
+            }
+            .input-form {
+                flex-wrap: wrap;
+            }
+            .input-form input[type="text"] {
+                width: 100%;
+            }
+            .file-input-label,
+            .input-form button {
+                flex: 1;
+            }
+        }
+        
+        /* Loading state */
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+    </style>
 </head>
 <body>
-    <table border="1" cellpadding="10" cellspacing="0" width="100%">
-        <tr>
-            <td bgcolor="#f0f0f0" width="250" valign="top">
-                <h3>User Online (<span id="user-count">0</span>)</h3>
-                <div id="online-users">Memuat...</div>
-            </td>
-            <td valign="top">
-                <table width="100%">
-                    <tr>
-                        <td bgcolor="#e8f4f8">
-                            <strong>Anda:</strong> <span id="current-user"><?php echo htmlspecialchars($username); ?></span>
-                            <form onsubmit="changeUsername(event)">
-                                <input type="text" id="new_username" placeholder="Nama User baru" size="15">
-                                <button type="submit">Ubah Nama</button>
-                            </form>
-                        </td>
-                    </tr>
-                </table>
+    <div class="header">
+        <h1>Chat Room - <span id="current-user"><?php echo htmlspecialchars($username); ?></span></h1>
+        <form class="username-form" onsubmit="changeUsername(event)">
+            <input type="text" id="new_username" placeholder="Ubah nama..." maxlength="20">
+            <button type="submit">Ubah</button>
+        </form>
+    </div>
+    
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                Online (<span id="user-count">0</span>)
+            </div>
+            <div class="user-list" id="online-users">
+                <div class="loading">Memuat...</div>
+            </div>
+        </div>
+        
+        <div class="chat-area">
+            <div class="messages" id="chat-messages">
+                <div class="loading">Memuat pesan...</div>
+            </div>
+            
+            <div class="input-area">
+                <div class="file-preview" id="file-preview"></div>
                 
-                <hr>
-                
-                <div id="chat-messages" style="height: 400px; overflow-y: scroll; border: 2px solid #ccc; padding: 10px; background: #fafafa;">
-                    Memuat pesan...
-                </div>
-                
-                <hr>
-                
-                <form onsubmit="sendMessage(event)" id="chat-form">
-                    <table width="100%">
-                        <tr>
-                            <td>
-                                <input type="text" id="message-input" placeholder="Ketik pesan atau tempel gambar (Ctrl+V)..." size="80" autofocus>
-                            </td>
-                            <td>
-                                <input type="file" id="file-input" onchange="handleFileSelect(event)">
-                            </td>
-                            <td>
-                                <button type="submit">Kirim</button>
-                            </td>
-                        </tr>
-                    </table>
-                    <div id="file-preview"></div>
+                <form class="input-form" onsubmit="sendMessage(event)" id="chat-form">
+                    <input type="text" id="message-input" placeholder="Ketik pesan atau tempel gambar (Ctrl+V)..." autofocus>
+                    
+                    <label class="file-input-label">
+                        File
+                        <input type="file" id="file-input" onchange="handleFileSelect(event)">
+                    </label>
+                    
+                    <button type="submit">Kirim</button>
                 </form>
                 
-                <p><small>Pesan dan file otomatis terhapus setelah 1 hari. Ukuran file maksimal: 33 MB. Tempel gambar dengan Ctrl+V!</small></p>
-            </td>
-        </tr>
-    </table>
+                <div class="input-info">
+                    Pesan dihapus otomatis setelah 1 hari. Maks 33 MB. Tempel gambar: Ctrl+V
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         let lastMessageId = 0;
@@ -99,10 +356,7 @@ $conn->close();
                     const file = new File([blob], filename, { type: item.type });
                     
                     selectedFile = file;
-                    const preview = document.getElementById('file-preview');
-                    preview.innerHTML = '<strong>Terlampir:</strong> ' + escapeHtml(file.name) + ' (' + formatFileSize(file.size) + ') ' +
-                        '<button type="button" onclick="clearFile()">Hapus</button>';
-                    
+                    showFilePreview(file);
                     document.getElementById('message-input').focus();
                     return;
                 }
@@ -115,20 +369,26 @@ $conn->close();
 
             const maxSize = 33 * 1024 * 1024;
             if (file.size > maxSize) {
-                alert('File terlalu besar! Ukuran maksimal adalah 33 MB.');
+                alert('File terlalu besar! Ukuran maksimal 33 MB.');
                 e.target.value = '';
                 return;
             }
 
             selectedFile = file;
+            showFilePreview(file);
+        }
+
+        function showFilePreview(file) {
             const preview = document.getElementById('file-preview');
-            preview.innerHTML = '<strong>Terlampir:</strong> ' + escapeHtml(file.name) + ' (' + formatFileSize(file.size) + ') ' +
+            preview.className = 'file-preview active';
+            preview.innerHTML = '<strong>Terlampir:</strong> ' + escapeHtml(file.name) + ' (' + formatFileSize(file.size) + ')' +
                 '<button type="button" onclick="clearFile()">Hapus</button>';
         }
 
         function clearFile() {
             selectedFile = null;
             document.getElementById('file-input').value = '';
+            document.getElementById('file-preview').className = 'file-preview';
             document.getElementById('file-preview').innerHTML = '';
         }
 
@@ -196,28 +456,42 @@ $conn->close();
             .then(function(data) {
                 const chatDiv = document.getElementById('chat-messages');
                 
+                if (lastMessageId === 0 && data.messages && data.messages.length === 0) {
+                    chatDiv.innerHTML = '<div class="loading">Belum ada pesan. Kirim pesan pertama!</div>';
+                }
+                
                 if (data.messages && data.messages.length > 0) {
+                    if (lastMessageId === 0) {
+                        chatDiv.innerHTML = '';
+                    }
+                    
                     data.messages.forEach(function(msg) {
                         const msgDiv = document.createElement('div');
+                        msgDiv.className = 'message';
+                        
                         const time = new Date(msg.created_at).toLocaleTimeString();
-                        let html = '<p><strong>[' + time + '] ' + escapeHtml(msg.username) + ':</strong><br>';
+                        let html = '<div class="message-header">' + escapeHtml(msg.username) + 
+                                  ' <span class="message-time">' + time + '</span></div>';
                         
                         if (msg.message) {
-                            html += escapeHtml(msg.message).replace(/\n/g, '<br>');
+                            html += '<div class="message-content">' + 
+                                   escapeHtml(msg.message).replace(/\n/g, '<br>') + '</div>';
                         }
                         
                         if (msg.file_path) {
-                            html += '<br>';
                             if (msg.file_type === 'image') {
-                                html += '<a href="' + escapeHtml(msg.file_path) + '" target="_blank">' +
-                                    '<img src="' + escapeHtml(msg.file_path) + '" alt="' + escapeHtml(msg.file_name) + '" width="300"></a>';
+                                html += '<div class="message-image">' +
+                                    '<a href="' + escapeHtml(msg.file_path) + '" target="_blank">' +
+                                    '<img src="' + escapeHtml(msg.file_path) + '" alt="' + escapeHtml(msg.file_name) + '"></a>' +
+                                    '</div>';
                             } else {
-                                html += '<a href="' + escapeHtml(msg.file_path) + '" download="' + escapeHtml(msg.file_name) + '">' +
-                                    'Unduh: ' + escapeHtml(msg.file_name) + '</a>';
+                                html += '<div class="message-file">' +
+                                    '<a href="' + escapeHtml(msg.file_path) + '" download="' + escapeHtml(msg.file_name) + '">' +
+                                    'Unduh: ' + escapeHtml(msg.file_name) + '</a>' +
+                                    '</div>';
                             }
                         }
                         
-                        html += '</p><hr>';
                         msgDiv.innerHTML = html;
                         chatDiv.appendChild(msgDiv);
                         lastMessageId = msg.id;
@@ -232,11 +506,13 @@ $conn->close();
             .then(function(response) { return response.json(); })
             .then(function(data) {
                 const usersDiv = document.getElementById('online-users');
-                if (data.users) {
+                if (data.users && data.users.length > 0) {
                     usersDiv.innerHTML = data.users.map(function(u) { 
-                        return escapeHtml(u.username); 
-                    }).join('<br>');
+                        return '<div class="user-item">' + escapeHtml(u.username) + '</div>'; 
+                    }).join('');
                     document.getElementById('user-count').textContent = data.users.length;
+                } else {
+                    usersDiv.innerHTML = '<div class="loading">Tidak ada user online</div>';
                 }
             });
         }
