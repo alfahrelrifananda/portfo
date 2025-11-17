@@ -25,10 +25,11 @@ require_once 'config.php';
             <!-- <a href="about.php">Tentang</a> |  -->
             <a href="projects.php">Proyek</a> | 
             <a href="blog.php">Blog</a> | 
-            <a href="contact.php">Kontak</a>
+            <a href="contact.php">Kontak</a> |
             <?php if (function_exists('isLoggedIn') && isLoggedIn()): ?>
                 | <a href="dashboard.php">Dashboard</a>
             <?php endif; ?>
+            <a href="chat.php">Chat</a>
         </nav>
     </header>
     
