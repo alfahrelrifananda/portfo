@@ -297,7 +297,7 @@ body {
 }
 
 /* Mobile responsive */
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
     body {
         height: 100dvh;
         height: 100vh;
@@ -341,6 +341,7 @@ body {
         max-height: 120px;
         min-height: 120px;
         border-right: none;
+        display: none;
         border-bottom: 1px solid #2a2a2a;
         flex-shrink: 0;
     }
