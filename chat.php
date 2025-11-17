@@ -60,7 +60,7 @@ $conn->close();
                 <div class="file-preview" id="file-preview"></div>
                 
                 <form class="input-form" onsubmit="sendMessage(event)" id="chat-form">
-                    <input type="text" id="message-input" placeholder="Ketik pesan atau tempel gambar (Ctrl+V)..." autofocus>
+                    <textarea id="message-input" placeholder="Ketik pesan (Shift+Enter: baris baru)..." rows="1"></textarea>
                     
                     <label class="file-input-label">
                         File
@@ -71,7 +71,7 @@ $conn->close();
                 </form>
                 
                 <div class="input-info">
-                    Pesan dihapus otomatis setelah 1 hari. Maks 33 MB. Tempel gambar: Ctrl+V
+                    Enter: kirim | Shift+Enter: baris baru | Ctrl+V: tempel gambar | Maks 33 MB
                 </div>
             </div>
         </div>

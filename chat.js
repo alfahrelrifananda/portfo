@@ -1,6 +1,7 @@
 let lastMessageId = 0;
 let updateInterval;
 let selectedFile = null;
+let isLoading = false;
 
 document.addEventListener('paste', function(e) {
     const items = e.clipboardData.items;
@@ -19,6 +20,14 @@ document.addEventListener('paste', function(e) {
             document.getElementById('message-input').focus();
             return;
         }
+    }
+});
+
+// Handle Shift+Enter for new line, Enter to send
+document.getElementById('message-input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        document.getElementById('chat-form').dispatchEvent(new Event('submit'));
     }
 });
 
@@ -59,9 +68,14 @@ function formatFileSize(bytes) {
 
 function sendMessage(e) {
     e.preventDefault();
-    const message = document.getElementById('message-input').value.trim();
+    const messageInput = document.getElementById('message-input');
+    const message = messageInput.value.trim();
     
     if (!message && !selectedFile) return;
+
+    // Disable send button to prevent double sending
+    const sendButton = document.querySelector('.input-form button[type="submit"]');
+    sendButton.disabled = true;
 
     const formData = new FormData();
     formData.append('action', 'send');
@@ -75,16 +89,21 @@ function sendMessage(e) {
     .then(function(response) { return response.json(); })
     .then(function(data) {
         if (data.success) {
-            document.getElementById('message-input').value = '';
+            messageInput.value = '';
             clearFile();
-            loadMessages();
+            // Wait a bit before loading to ensure message is in DB
+            setTimeout(function() {
+                loadMessages();
+            }, 100);
         } else if (data.error) {
             alert(data.error);
         }
+        sendButton.disabled = false;
     })
     .catch(function(err) {
         console.error('Error:', err);
         alert('Gagal mengirim pesan');
+        sendButton.disabled = false;
     });
 }
 
@@ -103,6 +122,7 @@ function changeUsername(e) {
         if (data.success) {
             document.getElementById('current-user').textContent = newUsername;
             document.getElementById('new_username').value = '';
+            lastMessageId = 0; // Reset to reload all messages
             loadMessages();
             loadUsers();
         }
@@ -110,6 +130,9 @@ function changeUsername(e) {
 }
 
 function loadMessages() {
+    if (isLoading) return; // Prevent concurrent loads
+    isLoading = true;
+
     fetch('chat_api.php?action=messages&last_id=' + lastMessageId)
     .then(function(response) { return response.json(); })
     .then(function(data) {
@@ -124,17 +147,23 @@ function loadMessages() {
                 chatDiv.innerHTML = '';
             }
             
+            const shouldScroll = chatDiv.scrollHeight - chatDiv.scrollTop <= chatDiv.clientHeight + 100;
+            
             data.messages.forEach(function(msg) {
                 const msgDiv = document.createElement('div');
                 msgDiv.className = 'message';
+                msgDiv.setAttribute('data-message-id', msg.id);
                 
                 const time = new Date(msg.created_at).toLocaleTimeString();
                 let html = '<div class="message-header">' + escapeHtml(msg.username) + 
                           ' <span class="message-time">' + time + '</span></div>';
                 
                 if (msg.message) {
-                    html += '<div class="message-content">' + 
-                           escapeHtml(msg.message).replace(/\n/g, '<br>') + '</div>';
+                    // Format message with line breaks and preserve formatting
+                    const formattedMessage = escapeHtml(msg.message)
+                        .replace(/\n/g, '<br>')
+                        .replace(/  /g, '&nbsp;&nbsp;');
+                    html += '<div class="message-content">' + formattedMessage + '</div>';
                 }
                 
                 if (msg.file_path) {
@@ -146,7 +175,7 @@ function loadMessages() {
                     } else {
                         html += '<div class="message-file">' +
                             '<a href="' + escapeHtml(msg.file_path) + '" download="' + escapeHtml(msg.file_name) + '">' +
-                            'Unduh: ' + escapeHtml(msg.file_name) + '</a>' +
+                            '📎 ' + escapeHtml(msg.file_name) + '</a>' +
                             '</div>';
                     }
                 }
@@ -155,8 +184,17 @@ function loadMessages() {
                 chatDiv.appendChild(msgDiv);
                 lastMessageId = msg.id;
             });
-            chatDiv.scrollTop = chatDiv.scrollHeight;
+            
+            // Only auto-scroll if user was near bottom
+            if (shouldScroll) {
+                chatDiv.scrollTop = chatDiv.scrollHeight;
+            }
         }
+        isLoading = false;
+    })
+    .catch(function(err) {
+        console.error('Error loading messages:', err);
+        isLoading = false;
     });
 }
 
@@ -173,6 +211,9 @@ function loadUsers() {
         } else {
             usersDiv.innerHTML = '<div class="loading">Tidak ada user online</div>';
         }
+    })
+    .catch(function(err) {
+        console.error('Error loading users:', err);
     });
 }
 
@@ -182,9 +223,11 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
+// Initial load
 loadMessages();
 loadUsers();
 
+// Poll for updates every 2 seconds
 updateInterval = setInterval(function() {
     loadMessages();
     loadUsers();
