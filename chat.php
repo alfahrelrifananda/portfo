@@ -8,6 +8,14 @@ if (!isset($_SESSION['chat_username'])) {
 $username = $_SESSION['chat_username'];
 $conn = getConnection();
 
+// Delete old files before deleting messages
+$result = $conn->query("SELECT file_path FROM chat_messages WHERE created_at < DATE_SUB(NOW(), INTERVAL 1 DAY) AND file_path IS NOT NULL");
+while ($row = $result->fetch_assoc()) {
+    if (file_exists($row['file_path'])) {
+        unlink($row['file_path']);
+    }
+}
+
 $conn->query("DELETE FROM chat_messages WHERE created_at < DATE_SUB(NOW(), INTERVAL 1 DAY)");
 $conn->query("DELETE FROM chat_users WHERE last_seen < DATE_SUB(NOW(), INTERVAL 1 DAY)");
 
@@ -17,59 +25,147 @@ $stmt->execute();
 $conn->close();
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
     <title>Chat - <?php echo htmlspecialchars($username); ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
 </head>
 <body>
-    <h1>Chat Room</h1>
-    
-    <p>
-        <strong>You:</strong> <span id="current-user"><?php echo htmlspecialchars($username); ?></span>
-        <form onsubmit="changeUsername(event)" style="display:inline;">
-            <input type="text" id="new_username" placeholder="New username" size="15">
-            <button type="submit">Change</button>
-        </form>
-    </p>
-
-    <div>
-        <h3>Online Users (<span id="user-count">0</span>)</h3>
-        <div id="online-users">Loading...</div>
-    </div>
-
-    <hr>
-
-    <div id="chat-messages" style="max-height: 400px; overflow-y: auto; border: 1px solid; padding: 10px; margin: 10px 0;">
-        Loading messages...
-    </div>
-
-    <form onsubmit="sendMessage(event)">
-        <input type="text" id="message-input" placeholder="Type your message..." style="width: 80%; max-width: 600px;" autofocus required>
-        <button type="submit">Send</button>
-    </form>
-
-    <hr>
-    <p><small>Messages older than 1 day are automatically deleted</small></p>
+    <table border="1" cellpadding="10" cellspacing="0" width="100%">
+        <tr>
+            <td bgcolor="#f0f0f0" width="250" valign="top">
+                <h3>User Online (<span id="user-count">0</span>)</h3>
+                <div id="online-users">Memuat...</div>
+            </td>
+            <td valign="top">
+                <table width="100%">
+                    <tr>
+                        <td bgcolor="#e8f4f8">
+                            <strong>Anda:</strong> <span id="current-user"><?php echo htmlspecialchars($username); ?></span>
+                            <form onsubmit="changeUsername(event)">
+                                <input type="text" id="new_username" placeholder="Nama User baru" size="15">
+                                <button type="submit">Ubah Nama</button>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+                
+                <hr>
+                
+                <div id="chat-messages" style="height: 400px; overflow-y: scroll; border: 2px solid #ccc; padding: 10px; background: #fafafa;">
+                    Memuat pesan...
+                </div>
+                
+                <hr>
+                
+                <form onsubmit="sendMessage(event)" id="chat-form">
+                    <table width="100%">
+                        <tr>
+                            <td>
+                                <input type="text" id="message-input" placeholder="Ketik pesan atau tempel gambar (Ctrl+V)..." size="80" autofocus>
+                            </td>
+                            <td>
+                                <input type="file" id="file-input" onchange="handleFileSelect(event)">
+                            </td>
+                            <td>
+                                <button type="submit">Kirim</button>
+                            </td>
+                        </tr>
+                    </table>
+                    <div id="file-preview"></div>
+                </form>
+                
+                <p><small>Pesan dan file otomatis terhapus setelah 1 hari. Ukuran file maksimal: 33 MB. Tempel gambar dengan Ctrl+V!</small></p>
+            </td>
+        </tr>
+    </table>
 
     <script>
         let lastMessageId = 0;
         let updateInterval;
+        let selectedFile = null;
+
+        document.addEventListener('paste', function(e) {
+            const items = e.clipboardData.items;
+            
+            for (let i = 0; i < items.length; i++) {
+                const item = items[i];
+                
+                if (item.type.indexOf('image') !== -1) {
+                    e.preventDefault();
+                    const blob = item.getAsFile();
+                    const filename = 'clipboard-' + Date.now() + '.' + item.type.split('/')[1];
+                    const file = new File([blob], filename, { type: item.type });
+                    
+                    selectedFile = file;
+                    const preview = document.getElementById('file-preview');
+                    preview.innerHTML = '<strong>Terlampir:</strong> ' + escapeHtml(file.name) + ' (' + formatFileSize(file.size) + ') ' +
+                        '<button type="button" onclick="clearFile()">Hapus</button>';
+                    
+                    document.getElementById('message-input').focus();
+                    return;
+                }
+            }
+        });
+
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const maxSize = 33 * 1024 * 1024;
+            if (file.size > maxSize) {
+                alert('File terlalu besar! Ukuran maksimal adalah 33 MB.');
+                e.target.value = '';
+                return;
+            }
+
+            selectedFile = file;
+            const preview = document.getElementById('file-preview');
+            preview.innerHTML = '<strong>Terlampir:</strong> ' + escapeHtml(file.name) + ' (' + formatFileSize(file.size) + ') ' +
+                '<button type="button" onclick="clearFile()">Hapus</button>';
+        }
+
+        function clearFile() {
+            selectedFile = null;
+            document.getElementById('file-input').value = '';
+            document.getElementById('file-preview').innerHTML = '';
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+        }
 
         function sendMessage(e) {
             e.preventDefault();
             const message = document.getElementById('message-input').value.trim();
-            if (!message) return;
+            
+            if (!message && !selectedFile) return;
+
+            const formData = new FormData();
+            formData.append('action', 'send');
+            if (message) formData.append('message', message);
+            if (selectedFile) formData.append('file', selectedFile);
 
             fetch('chat_api.php', {
                 method: 'POST',
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                body: 'action=send&message=' + encodeURIComponent(message)
+                body: formData
             })
-            .then(response => response.json())
-            .then(() => {
-                document.getElementById('message-input').value = '';
-                loadMessages();
+            .then(function(response) { return response.json(); })
+            .then(function(data) {
+                if (data.success) {
+                    document.getElementById('message-input').value = '';
+                    clearFile();
+                    loadMessages();
+                } else if (data.error) {
+                    alert(data.error);
+                }
+            })
+            .catch(function(err) {
+                console.error('Error:', err);
+                alert('Gagal mengirim pesan');
             });
         }
 
@@ -83,8 +179,8 @@ $conn->close();
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 body: 'action=change_username&username=' + encodeURIComponent(newUsername)
             })
-            .then(response => response.json())
-            .then(data => {
+            .then(function(response) { return response.json(); })
+            .then(function(data) {
                 if (data.success) {
                     document.getElementById('current-user').textContent = newUsername;
                     document.getElementById('new_username').value = '';
@@ -96,17 +192,33 @@ $conn->close();
 
         function loadMessages() {
             fetch('chat_api.php?action=messages&last_id=' + lastMessageId)
-            .then(response => response.json())
-            .then(data => {
+            .then(function(response) { return response.json(); })
+            .then(function(data) {
                 const chatDiv = document.getElementById('chat-messages');
                 
                 if (data.messages && data.messages.length > 0) {
-                    data.messages.forEach(msg => {
+                    data.messages.forEach(function(msg) {
                         const msgDiv = document.createElement('div');
                         const time = new Date(msg.created_at).toLocaleTimeString();
-                        msgDiv.innerHTML = '<strong>[' + time + ']</strong> <strong>' + 
-                            escapeHtml(msg.username) + ':</strong> ' + 
-                            escapeHtml(msg.message).replace(/\n/g, '<br>');
+                        let html = '<p><strong>[' + time + '] ' + escapeHtml(msg.username) + ':</strong><br>';
+                        
+                        if (msg.message) {
+                            html += escapeHtml(msg.message).replace(/\n/g, '<br>');
+                        }
+                        
+                        if (msg.file_path) {
+                            html += '<br>';
+                            if (msg.file_type === 'image') {
+                                html += '<a href="' + escapeHtml(msg.file_path) + '" target="_blank">' +
+                                    '<img src="' + escapeHtml(msg.file_path) + '" alt="' + escapeHtml(msg.file_name) + '" width="300"></a>';
+                            } else {
+                                html += '<a href="' + escapeHtml(msg.file_path) + '" download="' + escapeHtml(msg.file_name) + '">' +
+                                    'Unduh: ' + escapeHtml(msg.file_name) + '</a>';
+                            }
+                        }
+                        
+                        html += '</p><hr>';
+                        msgDiv.innerHTML = html;
                         chatDiv.appendChild(msgDiv);
                         lastMessageId = msg.id;
                     });
@@ -117,11 +229,13 @@ $conn->close();
 
         function loadUsers() {
             fetch('chat_api.php?action=users')
-            .then(response => response.json())
-            .then(data => {
+            .then(function(response) { return response.json(); })
+            .then(function(data) {
                 const usersDiv = document.getElementById('online-users');
                 if (data.users) {
-                    usersDiv.innerHTML = data.users.map(u => escapeHtml(u.username)).join('<br>');
+                    usersDiv.innerHTML = data.users.map(function(u) { 
+                        return escapeHtml(u.username); 
+                    }).join('<br>');
                     document.getElementById('user-count').textContent = data.users.length;
                 }
             });
@@ -136,7 +250,7 @@ $conn->close();
         loadMessages();
         loadUsers();
 
-        updateInterval = setInterval(() => {
+        updateInterval = setInterval(function() {
             loadMessages();
             loadUsers();
         }, 2000);

@@ -18,11 +18,75 @@ $action = isset($_GET['action']) ? $_GET['action'] : (isset($_POST['action']) ? 
 
 switch ($action) {
     case 'send':
-        if (isset($_POST['message'])) {
-            $message = trim($_POST['message']);
-            if (!empty($message)) {
-                $stmt = $conn->prepare("INSERT INTO chat_messages (username, message) VALUES (?, ?)");
-                $stmt->bind_param("ss", $username, $message);
+        if (isset($_POST['message']) || isset($_FILES['file'])) {
+            $message = isset($_POST['message']) ? trim($_POST['message']) : '';
+            $file_path = null;
+            $file_name = null;
+            $file_type = null;
+            
+            // Handle file upload
+            if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+                $upload_dir = __DIR__ . '/uploads/';
+                
+                // Create directory if it doesn't exist
+                if (!is_dir($upload_dir)) {
+                    if (!mkdir($upload_dir, 0755, true)) {
+                        echo json_encode(['success' => false, 'error' => 'Failed to create uploads directory.']);
+                        break;
+                    }
+                }
+                
+                // Check if directory is writable
+                if (!is_writable($upload_dir)) {
+                    echo json_encode(['success' => false, 'error' => 'Uploads directory is not writable.']);
+                    break;
+                }
+                
+                $file_size = $_FILES['file']['size'];
+                $max_size = 33 * 1024 * 1024; // 33 MB
+                
+                if ($file_size > $max_size) {
+                    echo json_encode(['success' => false, 'error' => 'File too large. Max 33 MB.']);
+                    break;
+                }
+                
+                $file_name = basename($_FILES['file']['name']);
+                $file_extension = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+                $unique_name = uniqid() . '_' . time() . '.' . $file_extension;
+                $full_path = $upload_dir . $unique_name;
+                $file_path = 'uploads/' . $unique_name; // Relative path for database
+                
+                // Determine file type
+                $image_extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp'];
+                if (in_array($file_extension, $image_extensions)) {
+                    $file_type = 'image';
+                } else {
+                    $file_type = 'file';
+                }
+                
+                if (!move_uploaded_file($_FILES['file']['tmp_name'], $full_path)) {
+                    $error_msg = 'Failed to upload file. Error: ' . error_get_last()['message'];
+                    echo json_encode(['success' => false, 'error' => $error_msg]);
+                    break;
+                }
+            } else if (isset($_FILES['file']) && $_FILES['file']['error'] !== UPLOAD_ERR_OK) {
+                $upload_errors = [
+                    UPLOAD_ERR_INI_SIZE => 'File exceeds upload_max_filesize in php.ini',
+                    UPLOAD_ERR_FORM_SIZE => 'File exceeds MAX_FILE_SIZE in HTML form',
+                    UPLOAD_ERR_PARTIAL => 'File was only partially uploaded',
+                    UPLOAD_ERR_NO_FILE => 'No file was uploaded',
+                    UPLOAD_ERR_NO_TMP_DIR => 'Missing temporary folder',
+                    UPLOAD_ERR_CANT_WRITE => 'Failed to write file to disk',
+                    UPLOAD_ERR_EXTENSION => 'File upload stopped by extension'
+                ];
+                $error_msg = $upload_errors[$_FILES['file']['error']] ?? 'Unknown upload error';
+                echo json_encode(['success' => false, 'error' => $error_msg]);
+                break;
+            }
+            
+            if (!empty($message) || $file_path) {
+                $stmt = $conn->prepare("INSERT INTO chat_messages (username, message, file_path, file_name, file_type) VALUES (?, ?, ?, ?, ?)");
+                $stmt->bind_param("sssss", $username, $message, $file_path, $file_name, $file_type);
                 $stmt->execute();
                 echo json_encode(['success' => true]);
             } else {
