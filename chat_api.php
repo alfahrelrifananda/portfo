@@ -107,6 +107,41 @@ switch ($action) {
         }
         break;
 
+    case 'delete':
+        if (isset($_POST['message_id'])) {
+            $message_id = intval($_POST['message_id']);
+            
+            // First, get the message to check ownership and file path
+            $stmt = $conn->prepare("SELECT username, file_path FROM chat_messages WHERE id = ?");
+            $stmt->bind_param("i", $message_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            if ($row = $result->fetch_assoc()) {
+                // Check if the user owns this message
+                if ($row['username'] === $username) {
+                    // Delete the file if it exists
+                    if ($row['file_path'] && file_exists($row['file_path'])) {
+                        unlink($row['file_path']);
+                    }
+                    
+                    // Delete the message from database
+                    $stmt = $conn->prepare("DELETE FROM chat_messages WHERE id = ? AND username = ?");
+                    $stmt->bind_param("is", $message_id, $username);
+                    $stmt->execute();
+                    
+                    echo json_encode(['success' => true]);
+                } else {
+                    echo json_encode(['success' => false, 'error' => 'Unauthorized']);
+                }
+            } else {
+                echo json_encode(['success' => false, 'error' => 'Message not found']);
+            }
+        } else {
+            echo json_encode(['success' => false, 'error' => 'No message_id provided']);
+        }
+        break;
+
     case 'messages':
         $last_id = isset($_GET['last_id']) ? intval($_GET['last_id']) : 0;
         $stmt = $conn->prepare("SELECT * FROM chat_messages WHERE id > ? ORDER BY created_at ASC LIMIT 50");
@@ -116,10 +151,12 @@ switch ($action) {
         
         $messages = [];
         while ($row = $result->fetch_assoc()) {
+            // Add flag to indicate if current user can delete this message
+            $row['can_delete'] = ($row['username'] === $username);
             $messages[] = $row;
         }
         
-        echo json_encode(['messages' => $messages]);
+        echo json_encode(['messages' => $messages, 'current_user' => $username]);
         break;
 
     case 'users':

@@ -142,11 +142,33 @@ body {
     color: var(--text-color);
     margin-bottom: 5px;
     font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .message-time {
     color: #888;
     font-size: 11px;
+    font-weight: normal;
+    margin-left: 8px;
+}
+
+.delete-btn {
+    background: transparent;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    transition: all 0.2s;
+    margin-left: auto;
+}
+
+.delete-btn:hover {
+    background: #cc4444;
+    color: var(--text-color);
 }
 
 .message-content {
@@ -388,6 +410,11 @@ body {
 
     .message-content {
         font-size: 13px;
+    }
+
+    .delete-btn {
+        font-size: 14px;
+        padding: 2px 4px;
     }
     
     .input-area {

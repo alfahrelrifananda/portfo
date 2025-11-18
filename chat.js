@@ -2,6 +2,7 @@ let lastMessageId = 0;
 let updateInterval;
 let selectedFile = null;
 let isLoading = false;
+let currentUser = '';
 
 document.addEventListener('paste', function(e) {
     const items = e.clipboardData.items;
@@ -64,6 +65,32 @@ function formatFileSize(bytes) {
     if (bytes < 1024) return bytes + ' B';
     if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
     return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+}
+
+function deleteMessage(messageId) {
+    if (!confirm('Hapus pesan ini?')) return;
+    
+    fetch('chat_api.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: 'action=delete&message_id=' + messageId
+    })
+    .then(function(response) { return response.json(); })
+    .then(function(data) {
+        if (data.success) {
+            // Remove the message from DOM
+            const msgElement = document.querySelector('[data-message-id="' + messageId + '"]');
+            if (msgElement) {
+                msgElement.remove();
+            }
+        } else {
+            alert('Gagal menghapus pesan: ' + (data.error || 'Unknown error'));
+        }
+    })
+    .catch(function(err) {
+        console.error('Error deleting message:', err);
+        alert('Gagal menghapus pesan');
+    });
 }
 
 function sendMessage(e) {
@@ -138,6 +165,7 @@ function changeUsername(e) {
         if (data.success) {
             document.getElementById('current-user').textContent = newUsername;
             document.getElementById('new_username').value = '';
+            currentUser = newUsername;
             lastMessageId = 0; // Reset to reload all messages
             loadMessages();
             loadUsers();
@@ -153,6 +181,11 @@ function loadMessages() {
     .then(function(response) { return response.json(); })
     .then(function(data) {
         const chatDiv = document.getElementById('chat-messages');
+        
+        // Update current user
+        if (data.current_user) {
+            currentUser = data.current_user;
+        }
         
         if (lastMessageId === 0 && data.messages && data.messages.length === 0) {
             chatDiv.innerHTML = '<div class="loading">Belum ada pesan. Kirim pesan pertama!</div>';
@@ -172,7 +205,14 @@ function loadMessages() {
                 
                 const time = new Date(msg.created_at).toLocaleTimeString();
                 let html = '<div class="message-header">' + escapeHtml(msg.username) + 
-                          ' <span class="message-time">' + time + '</span></div>';
+                          ' <span class="message-time">' + time + '</span>';
+                
+                // Add delete button if user owns the message
+                if (msg.can_delete) {
+                    html += '<button class="delete-btn" onclick="deleteMessage(' + msg.id + ')" title="Hapus pesan">✕</button>';
+                }
+                
+                html += '</div>';
                 
                 if (msg.message) {
                     // Format message with line breaks and preserve formatting
