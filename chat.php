@@ -27,14 +27,14 @@ $conn->close();
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <title>Chat - <?php echo htmlspecialchars($username); ?></title>
+    <title><?php echo htmlspecialchars($username); ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <link rel="stylesheet" href="chat.css">
 </head>
 <body>
     <div class="header">
-        <h1>Chat Room - <span id="current-user"><?php echo htmlspecialchars($username); ?></span></h1>
+        <h1>alfahrelrifananda.my.id/chat.php</h1>
         <form class="username-form" onsubmit="changeUsername(event)">
             <input type="text" id="new_username" placeholder="Ubah nama..." maxlength="20">
             <button type="submit">Ubah</button>
@@ -71,7 +71,7 @@ $conn->close();
                 </form>
                 
                 <div class="input-info">
-                    Enter: kirim | Shift+Enter: baris baru | Ctrl+V: tempel gambar | Maks 7 MB
+                    Enter: kirim | Shift+Enter: baris baru | Ctrl+V: tempel gambar | Maks 11 MB
                 </div>
             </div>
         </div>

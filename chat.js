@@ -199,16 +199,20 @@ function loadMessages() {
             const shouldScroll = chatDiv.scrollHeight - chatDiv.scrollTop <= chatDiv.clientHeight + 100;
             
             data.messages.forEach(function(msg) {
+                // Debug logging
+                console.log('Message:', msg.id, 'Username:', msg.username, 'Current User:', currentUser, 'can_delete:', msg.can_delete);
+                
                 const msgDiv = document.createElement('div');
                 msgDiv.className = 'message';
                 msgDiv.setAttribute('data-message-id', msg.id);
                 
                 const time = new Date(msg.created_at).toLocaleTimeString();
-                let html = '<div class="message-header">' + escapeHtml(msg.username) + 
-                          ' <span class="message-time">' + time + '</span>';
+                let html = '<div class="message-header">';
+                html += '<span class="message-user">' + escapeHtml(msg.username) + 
+                       ' <span class="message-time">' + time + '</span></span>';
                 
                 // Add delete button if user owns the message
-                if (msg.can_delete) {
+                if (msg.can_delete === true || msg.can_delete === 1 || msg.can_delete === '1') {
                     html += '<button class="delete-btn" onclick="deleteMessage(' + msg.id + ')" title="Hapus pesan">✕</button>';
                 }
                 
