@@ -71,7 +71,7 @@ $conn->close();
                 </form>
                 
                 <div class="input-info">
-                    Enter: kirim | Shift+Enter: baris baru | Ctrl+V: tempel gambar | Maks 33 MB
+                    Enter: kirim | Shift+Enter: baris baru | Ctrl+V: tempel gambar | Maks 7 MB
                 </div>
             </div>
         </div>
