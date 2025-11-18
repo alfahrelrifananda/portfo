@@ -1,4 +1,8 @@
 <?php
+// Add error logging at the very top
+error_reporting(E_ALL);
+ini_set('display_errors', 0); // Don't display errors in output
+
 require_once 'config.php';
 
 header('Content-Type: application/json');
@@ -32,14 +36,14 @@ switch ($action) {
                 if (!is_dir($upload_dir)) {
                     if (!mkdir($upload_dir, 0755, true)) {
                         echo json_encode(['success' => false, 'error' => 'Failed to create uploads directory.']);
-                        break;
+                        exit;
                     }
                 }
                 
                 // Check if directory is writable
                 if (!is_writable($upload_dir)) {
                     echo json_encode(['success' => false, 'error' => 'Uploads directory is not writable.']);
-                    break;
+                    exit;
                 }
                 
                 $file_size = $_FILES['file']['size'];
@@ -47,7 +51,7 @@ switch ($action) {
                 
                 if ($file_size > $max_size) {
                     echo json_encode(['success' => false, 'error' => 'File too large. Max 33 MB.']);
-                    break;
+                    exit;
                 }
                 
                 $file_name = basename($_FILES['file']['name']);
@@ -65,23 +69,29 @@ switch ($action) {
                 }
                 
                 if (!move_uploaded_file($_FILES['file']['tmp_name'], $full_path)) {
-                    $error_msg = 'Failed to upload file. Error: ' . error_get_last()['message'];
+                    $error_msg = 'Failed to upload file.';
+                    if (function_exists('error_get_last')) {
+                        $last_error = error_get_last();
+                        if ($last_error) {
+                            $error_msg .= ' Error: ' . $last_error['message'];
+                        }
+                    }
                     echo json_encode(['success' => false, 'error' => $error_msg]);
-                    break;
+                    exit;
                 }
-            } else if (isset($_FILES['file']) && $_FILES['file']['error'] !== UPLOAD_ERR_OK) {
+            } else if (isset($_FILES['file']) && $_FILES['file']['error'] !== UPLOAD_ERR_NO_FILE) {
                 $upload_errors = [
-                    UPLOAD_ERR_INI_SIZE => 'File exceeds upload_max_filesize in php.ini',
+                    UPLOAD_ERR_INI_SIZE => 'File exceeds upload_max_filesize (' . ini_get('upload_max_filesize') . ')',
                     UPLOAD_ERR_FORM_SIZE => 'File exceeds MAX_FILE_SIZE in HTML form',
                     UPLOAD_ERR_PARTIAL => 'File was only partially uploaded',
-                    UPLOAD_ERR_NO_FILE => 'No file was uploaded',
                     UPLOAD_ERR_NO_TMP_DIR => 'Missing temporary folder',
                     UPLOAD_ERR_CANT_WRITE => 'Failed to write file to disk',
                     UPLOAD_ERR_EXTENSION => 'File upload stopped by extension'
                 ];
-                $error_msg = $upload_errors[$_FILES['file']['error']] ?? 'Unknown upload error';
+                $error_code = $_FILES['file']['error'];
+                $error_msg = isset($upload_errors[$error_code]) ? $upload_errors[$error_code] : 'Unknown upload error (code: ' . $error_code . ')';
                 echo json_encode(['success' => false, 'error' => $error_msg]);
-                break;
+                exit;
             }
             
             if (!empty($message) || $file_path) {
@@ -90,8 +100,10 @@ switch ($action) {
                 $stmt->execute();
                 echo json_encode(['success' => true]);
             } else {
-                echo json_encode(['success' => false]);
+                echo json_encode(['success' => false, 'error' => 'No message or file provided']);
             }
+        } else {
+            echo json_encode(['success' => false, 'error' => 'No data received']);
         }
         break;
 
@@ -126,8 +138,10 @@ switch ($action) {
                 $_SESSION['chat_username'] = $new_username;
                 echo json_encode(['success' => true, 'username' => $new_username]);
             } else {
-                echo json_encode(['success' => false]);
+                echo json_encode(['success' => false, 'error' => 'Invalid username']);
             }
+        } else {
+            echo json_encode(['success' => false, 'error' => 'No username provided']);
         }
         break;
 

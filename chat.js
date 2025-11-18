@@ -86,23 +86,39 @@ function sendMessage(e) {
         method: 'POST',
         body: formData
     })
-    .then(function(response) { return response.json(); })
-    .then(function(data) {
-        if (data.success) {
-            messageInput.value = '';
-            clearFile();
-            // Wait a bit before loading to ensure message is in DB
-            setTimeout(function() {
-                loadMessages();
-            }, 100);
-        } else if (data.error) {
-            alert(data.error);
+    .then(function(response) {
+        // Check if response is ok before parsing
+        if (!response.ok) {
+            throw new Error('Server error: ' + response.status);
+        }
+        return response.text(); // Get as text first to debug
+    })
+    .then(function(text) {
+        // Try to parse as JSON
+        try {
+            const data = JSON.parse(text);
+            if (data.success) {
+                messageInput.value = '';
+                clearFile();
+                // Wait a bit before loading to ensure message is in DB
+                setTimeout(function() {
+                    loadMessages();
+                }, 100);
+            } else if (data.error) {
+                alert('Error: ' + data.error);
+            } else {
+                alert('Gagal mengirim pesan');
+            }
+        } catch (parseError) {
+            // If JSON parsing fails, show what we got
+            console.error('Response was not JSON:', text);
+            alert('Server error: Response was not valid JSON. Check console for details.');
         }
         sendButton.disabled = false;
     })
     .catch(function(err) {
         console.error('Error:', err);
-        alert('Gagal mengirim pesan');
+        alert('Gagal mengirim pesan: ' + err.message);
         sendButton.disabled = false;
     });
 }
